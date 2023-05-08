@@ -1,0 +1,11 @@
+@model PersonalFinanceManagement.Models.Category
+
+<h2>Create Category</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

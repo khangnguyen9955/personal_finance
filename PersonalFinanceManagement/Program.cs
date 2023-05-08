@@ -35,9 +35,29 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "transaction",
-    pattern: "Transaction/{action}/{id?}",
-    defaults: new { controller = "Transaction", action = "Index" });
 
+  
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "transaction",
+        pattern: "Transaction/{action}/{id?}",
+        defaults: new { controller = "Transaction", action = "Index" });
+
+   
+    
+   
+    endpoints.MapControllerRoute(
+        name: "category-create",
+        pattern: "Category/Create",
+        defaults: new { controller = "Category", action = "Create" });
+
+    endpoints.MapControllerRoute(
+        name: "category-index",
+        pattern: "Category",
+        defaults: new { controller = "Category", action = "Index" });
+
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");});
 app.Run();

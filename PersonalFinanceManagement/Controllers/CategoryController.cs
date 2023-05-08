@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using PersonalFinanceManagement.Models;
 using PersonalFinanceManagement.Repositories;
 
 namespace PersonalFinanceManagement.Controllers;
@@ -14,9 +15,24 @@ public class CategoryController: Controller
 
     public IActionResult Index()
     {
-        var categories = _categoryRepo.GetAllCategories();
+        var categories = _categoryRepo.GetAllCategories().ToList();
         return View(categories);
     }
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+
+[HttpPost]
+public IActionResult Create(Category category)
+{
+    _categoryRepo.AddCategory(category);
+    return RedirectToAction(nameof(Index));
+}
+
+
 
     //...
 }

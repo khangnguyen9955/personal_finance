@@ -15,6 +15,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement
 build_property._RazorSourceGeneratorDebug = 
 
+[/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/Views/Category/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnkvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/Views/Category/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnkvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

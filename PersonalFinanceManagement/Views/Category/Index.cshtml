@@ -1,0 +1,22 @@
+@model List<PersonalFinanceManagement.Models.Category>
+
+<h2>Category List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+<tbody>
+    @foreach (var category in Model)
+    {
+        <tr>
+            <td>@category.Name</td>
+            <td><a asp-action="Create" asp-route-categoryId="@category.Id">Create</a></td>
+        </tr>
+    }
+</tbody>
+
+</table>

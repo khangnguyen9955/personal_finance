@@ -20,12 +20,25 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link text-dark" href="/Transaction">Transaction List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link text-dark" href="/Spending">Spending List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/Income">Income List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/Category">Category List</a>
                     </li>
                 </ul>
+                <div class="navbar-nav">
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <a class="nav-link text-dark" href="/Identity/Account/Register">Register</a>
+                        <a class="nav-link text-dark" href="/Identity/Account/Login">Login</a>
+                    }
+                </div>
             </div>
         </div>
     </nav>
