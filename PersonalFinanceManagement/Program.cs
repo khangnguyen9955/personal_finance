@@ -40,13 +40,15 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
-        name: "transaction",
-        pattern: "Transaction/{action}/{id?}",
+        name: "transaction-create",
+        pattern: "Transaction/Create",
+        defaults: new { controller = "Transaction", action = "Create" });
+
+    endpoints.MapControllerRoute(
+        name: "transaction-index",
+        pattern: "Transaction",
         defaults: new { controller = "Transaction", action = "Index" });
 
-   
-    
-   
     endpoints.MapControllerRoute(
         name: "category-create",
         pattern: "Category/Create",
@@ -59,5 +61,7 @@ app.UseEndpoints(endpoints =>
 
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");});
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+
 app.Run();
