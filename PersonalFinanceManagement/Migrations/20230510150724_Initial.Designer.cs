@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalFinanceManagement.Models;
 
@@ -11,9 +12,11 @@ using PersonalFinanceManagement.Models;
 namespace PersonalFinanceManagement.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230510150724_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,12 +47,7 @@ namespace PersonalFinanceManagement.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Categories");
                 });
@@ -166,15 +164,6 @@ namespace PersonalFinanceManagement.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PersonalFinanceManagement.Models.Category", b =>
-                {
-                    b.HasOne("PersonalFinanceManagement.Models.User", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("PersonalFinanceManagement.Models.Income", b =>
                 {
                     b.HasOne("PersonalFinanceManagement.Models.Category", "Category")
@@ -222,8 +211,6 @@ namespace PersonalFinanceManagement.Migrations
 
             modelBuilder.Entity("PersonalFinanceManagement.Models.User", b =>
                 {
-                    b.Navigation("Categories");
-
                     b.Navigation("Incomes");
 
                     b.Navigation("Spendings");

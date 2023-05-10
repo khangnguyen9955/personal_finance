@@ -11,7 +11,8 @@
           "EntityFramework": "6.4.4",
           "Microsoft.EntityFrameworkCore.Design": "7.0.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.5",
-          "Microsoft.EntityFrameworkCore.Tools": "7.0.5"
+          "Microsoft.EntityFrameworkCore.Tools": "7.0.5",
+          "Syncfusion.EJ2.AspNet.Core": "21.2.4"
         },
         "runtime": {
           "PersonalFinanceManagement.dll": {}
@@ -468,6 +469,14 @@
           }
         }
       },
+      "Newtonsoft.Json/13.0.2": {
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.2.27524"
+          }
+        }
+      },
       "runtime.native.System.Data.SqlClient.sni/4.7.0": {
         "dependencies": {
           "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
@@ -499,6 +508,26 @@
             "rid": "win-x86",
             "assetType": "native",
             "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Syncfusion.EJ2.AspNet.Core/21.2.4": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.2",
+          "Syncfusion.Licensing": "21.2.4"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Syncfusion.EJ2.dll": {
+            "assemblyVersion": "21.2.4.0",
+            "fileVersion": "21.2.4.0"
+          }
+        }
+      },
+      "Syncfusion.Licensing/21.2.4": {
+        "runtime": {
+          "lib/net6.0/Syncfusion.Licensing.dll": {
+            "assemblyVersion": "21.2.4.0",
+            "fileVersion": "21.2.4.0"
           }
         }
       },
@@ -1062,6 +1091,13 @@
       "path": "mono.texttemplating/2.2.1",
       "hashPath": "mono.texttemplating.2.2.1.nupkg.sha512"
     },
+    "Newtonsoft.Json/13.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-R2pZ3B0UjeyHShm9vG+Tu0EBb2lC8b0dFzV9gVn50ofHXh9Smjk6kTn7A/FdAsC8B5cKib1OnGYOXxRBz5XQDg==",
+      "path": "newtonsoft.json/13.0.2",
+      "hashPath": "newtonsoft.json.13.0.2.nupkg.sha512"
+    },
     "runtime.native.System.Data.SqlClient.sni/4.7.0": {
       "type": "package",
       "serviceable": true,
@@ -1089,6 +1125,20 @@
       "sha512": "sha512-YhEdSQUsTx+C8m8Bw7ar5/VesXvCFMItyZF7G1AUY+OM0VPZUOeAVpJ4Wl6fydBGUYZxojTDR3I6Bj/+BPkJNA==",
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
+    },
+    "Syncfusion.EJ2.AspNet.Core/21.2.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/T52A8hkEVeOypAqIzhsI4LCRuat2l8wte/yWOUYxgKMYed+jYjLM8LVsJpBclIs8933Ed7ii0rlPWI+HXnMyg==",
+      "path": "syncfusion.ej2.aspnet.core/21.2.4",
+      "hashPath": "syncfusion.ej2.aspnet.core.21.2.4.nupkg.sha512"
+    },
+    "Syncfusion.Licensing/21.2.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uUBW0vHMKqvegVcj5CouDE+rBuPp7mU0+xjNw9Niq+p9bt1KMFHC3pbSE9jZdydDv2a9fFFZzZCt5LU1vRbrrw==",
+      "path": "syncfusion.licensing/21.2.4",
+      "hashPath": "syncfusion.licensing.21.2.4.nupkg.sha512"
     },
     "System.Buffers/4.5.1": {
       "type": "package",

@@ -12,18 +12,19 @@ namespace PersonalFinanceManagement.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,7 +46,7 @@ namespace PersonalFinanceManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Income",
+                name: "Incomes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -60,15 +61,15 @@ namespace PersonalFinanceManagement.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Income", x => x.Id);
+                    table.PrimaryKey("PK_Incomes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Income_Category_CategoryId",
+                        name: "FK_Incomes_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Income_Users_UserId",
+                        name: "FK_Incomes_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -76,7 +77,7 @@ namespace PersonalFinanceManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Spending",
+                name: "Spendings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -91,15 +92,15 @@ namespace PersonalFinanceManagement.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Spending", x => x.Id);
+                    table.PrimaryKey("PK_Spendings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Spending_Category_CategoryId",
+                        name: "FK_Spendings_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Spending_Users_UserId",
+                        name: "FK_Spendings_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -107,23 +108,23 @@ namespace PersonalFinanceManagement.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Income_CategoryId",
-                table: "Income",
+                name: "IX_Incomes_CategoryId",
+                table: "Incomes",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Income_UserId",
-                table: "Income",
+                name: "IX_Incomes_UserId",
+                table: "Incomes",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Spending_CategoryId",
-                table: "Spending",
+                name: "IX_Spendings_CategoryId",
+                table: "Spendings",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Spending_UserId",
-                table: "Spending",
+                name: "IX_Spendings_UserId",
+                table: "Spendings",
                 column: "UserId");
         }
 
@@ -131,13 +132,13 @@ namespace PersonalFinanceManagement.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Income");
+                name: "Incomes");
 
             migrationBuilder.DropTable(
-                name: "Spending");
+                name: "Spendings");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Users");

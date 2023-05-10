@@ -88,3 +88,7 @@
 /Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/obj/Debug/net6.0/PersonalFinanceManagement.pdb
 /Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/obj/Debug/net6.0/PersonalFinanceManagement.genruntimeconfig.cache
 /Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/obj/Debug/net6.0/ref/PersonalFinanceManagement.dll
+/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/bin/Debug/net6.0/Newtonsoft.Json.dll
+/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/bin/Debug/net6.0/Syncfusion.EJ2.dll
+/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/bin/Debug/net6.0/Syncfusion.Licensing.dll
+/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/obj/Debug/net6.0/PersonalFinanceManagement.MvcApplicationPartsAssemblyInfo.cs

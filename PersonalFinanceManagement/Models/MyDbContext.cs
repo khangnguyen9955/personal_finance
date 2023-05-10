@@ -1,12 +1,14 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace PersonalFinanceManagement.Models;
 
-public class MyDbContext: DbContext
+public class MyDbContext : IdentityDbContext<User>
 {
-    public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
+    public MyDbContext(DbContextOptions<MyDbContext> options)
+        : base(options)
     {
-    } 
+    }
     public DbSet<User> Users { get; set; }
     public DbSet<Spending> Spendings { get; set; }
     

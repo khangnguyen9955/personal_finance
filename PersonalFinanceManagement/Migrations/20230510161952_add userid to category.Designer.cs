@@ -12,8 +12,8 @@ using PersonalFinanceManagement.Models;
 namespace PersonalFinanceManagement.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230506163228_Initial")]
-    partial class Initial
+    [Migration("20230510161952_add userid to category")]
+    partial class adduseridtocategory
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,12 +40,21 @@ namespace PersonalFinanceManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("PersonalFinanceManagement.Models.Income", b =>
@@ -84,7 +93,7 @@ namespace PersonalFinanceManagement.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Income");
+                    b.ToTable("Incomes");
                 });
 
             modelBuilder.Entity("PersonalFinanceManagement.Models.Spending", b =>
@@ -123,7 +132,7 @@ namespace PersonalFinanceManagement.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Spending");
+                    b.ToTable("Spendings");
                 });
 
             modelBuilder.Entity("PersonalFinanceManagement.Models.User", b =>
@@ -158,6 +167,15 @@ namespace PersonalFinanceManagement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("PersonalFinanceManagement.Models.Category", b =>
+                {
+                    b.HasOne("PersonalFinanceManagement.Models.User", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PersonalFinanceManagement.Models.Income", b =>
@@ -207,6 +225,8 @@ namespace PersonalFinanceManagement.Migrations
 
             modelBuilder.Entity("PersonalFinanceManagement.Models.User", b =>
                 {
+                    b.Navigation("Categories");
+
                     b.Navigation("Incomes");
 
                     b.Navigation("Spendings");

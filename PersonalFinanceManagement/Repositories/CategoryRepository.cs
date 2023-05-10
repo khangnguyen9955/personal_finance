@@ -16,22 +16,40 @@ public class CategoryRepository : ICategoryRepository
         return _context.Categories.ToList();
     }
 
+    public IEnumerable<Category> GetCategoriesByType(string type)
+    {
+        return _context.Categories.Where(c => c.Type == type);
+    }
     public Category GetCategoryById(int id)
     {
         return _context.Categories.FirstOrDefault(c => c.Id == id);
     }
 
-    public void AddCategory(Category category)
+    // public async void AddCategory(Category category)
+    // {
+    //  
+    //     _context.Categories.Add(category);
+    //     await _context.SaveChangesAsync();
+    // }
+    //
+    // public async void UpdateCategory(Category category)
+    // {
+    //     _context.Categories.Update(category);
+    //     await _context.SaveChangesAsync();
+    // }
+    
+    public async Task AddCategory(Category category)
     {
-        _context.Categories.Add(category);
-        _context.SaveChanges();
+        await _context.Categories.AddAsync(category);
+        await _context.SaveChangesAsync();
     }
 
-    public void UpdateCategory(Category category)
+    public async Task UpdateCategory(Category category)
     {
         _context.Categories.Update(category);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
+
 
     public void DeleteCategory(int id)
     {

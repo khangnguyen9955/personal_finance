@@ -11,11 +11,11 @@ public class IncomeController: Controller
         _incomeRepo = incomeRepo;
     }
 
-    public IActionResult Index()
-    {
-        var incomes = _incomeRepo.GetAllIncomes();
-        return View(incomes);
-    }
+    // public IActionResult Index()
+    // {
+    //     var incomes = _incomeRepo.GetAllIncomes();
+    //     return View(incomes);
+    // }
 
     //...
 }

@@ -15,12 +15,16 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement
 build_property._RazorSourceGeneratorDebug = 
 
-[/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/Views/Category/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnkvQ3JlYXRlLmNzaHRtbA==
+[/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/Views/Category/CreateOrEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnkvQ3JlYXRlT3JFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/Views/Category/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnkvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/Views/Dashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGFzaGJvYXJkL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/Views/Home/Index.cshtml]
@@ -35,8 +39,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/Views/Shared/_Sidebar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19TaWRlYmFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/Views/Transaction/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVHJhbnNhY3Rpb24vQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/Views/Transaction/Index.cshtml]

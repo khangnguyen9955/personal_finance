@@ -12,11 +12,11 @@ public class SpendingController: Controller
         _spendingRepo = spendingRepo;
     }
 
-    public IActionResult Index()
-    {
-        var spendings = _spendingRepo.GetAllSpendings();
-        return View(spendings);
-    }
+    // public IActionResult Index()
+    // {
+    //     var spendings = _spendingRepo.GetAllSpendings();
+    //     return View(spendings);
+    // }
 
     //...
 }
