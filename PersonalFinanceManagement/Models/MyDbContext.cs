@@ -19,25 +19,34 @@ public class MyDbContext : IdentityDbContext<User>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-    
+
         modelBuilder.Entity<User>()
             .HasMany(u => u.Spendings)
-            .WithOne(s => s.User);
-    
+            .WithOne(s => s.User)
+            .HasForeignKey(s => s.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         modelBuilder.Entity<User>()
             .HasMany(u => u.Incomes)
-            .WithOne(i => i.User);
-    
-        modelBuilder.Entity<Spending>()
-            .HasOne(s => s.Category)
-            .WithMany(c => c.Spendings)
-            .HasForeignKey(s => s.CategoryId);
-    
-        modelBuilder.Entity<Income>()
-            .HasOne(i => i.Category)
-            .WithMany(c => c.Incomes)
-            .HasForeignKey(i => i.CategoryId);
+            .WithOne(i => i.User)
+            .HasForeignKey(i => i.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Category>()
+            .HasMany(c => c.Incomes)
+            .WithOne(i => i.Category)
+            .HasForeignKey(i => i.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Category>()
+            .HasMany(c => c.Spendings)
+            .WithOne(s => s.Category)
+            .HasForeignKey(s => s.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
+
+
+
     public override int SaveChanges()
     {
         var currentTime = DateTime.UtcNow;

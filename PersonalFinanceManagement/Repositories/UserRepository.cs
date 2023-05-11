@@ -12,10 +12,10 @@ public class UserRepository : IUserRepository
     }
 
 
-    public User GetUserById(int id)
-    {
-        return _context.Users.FirstOrDefault(u => u.Id == id);
-    }
+    // public User GetUserById(int id)
+    // {
+    //     return _context.Users.FirstOrDefault(u => u.Id == id);
+    // }
 
     public void AddUser(User user)
     {

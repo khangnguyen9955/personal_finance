@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PersonalFinanceManagement.Models;
 
@@ -16,17 +17,15 @@ public class Income
     [Required(ErrorMessage = "The date field is required.")]
     public DateTime Date { get; set; }
 
-    
-
-    [Required]
-    public int UserId { get; set; }
-
     public int CategoryId { get; set; }
+    public virtual Category Category { get; set; }
 
+    public string UserId { get; set; } // Foreign key property
+
+    [ForeignKey(nameof(UserId))]
     public virtual User User { get; set; }
 
-    public virtual Category Category { get; set; }
+
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; } // Nullable
- 
 }

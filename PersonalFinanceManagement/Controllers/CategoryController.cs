@@ -1,8 +1,12 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalFinanceManagement.Models;
 using PersonalFinanceManagement.Repositories;
+using PersonalFinanceManagement.ViewModels;
 
 namespace PersonalFinanceManagement.Controllers;
+
 
 public class CategoryController: Controller
 {
@@ -18,76 +22,78 @@ public class CategoryController: Controller
         var categories = _categoryRepo.GetAllCategories().ToList();
         return View(categories);
     }
+    // [HttpGet]
+    // public IActionResult CreateOrEdit(int id = 0)
+    // {
+    //     if (id == 0)
+    //     {
+    //         return View(new Category());
+    //     }
+    //     else
+    //     {
+    //         return View(_categoryRepo.GetCategoryById(id));
+    //         
+    //     }
+    // }
     [HttpGet]
     public IActionResult CreateOrEdit(int id = 0)
     {
-        if (id == 0)
+        var category = new Category();
+
+        if (id != 0)
         {
-            return View(new Category());
+            category = _categoryRepo.GetCategoryById(id);
         }
         else
         {
-            return View(_categoryRepo.GetCategoryById(id));
-            
+            category.UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
+
+        return View(category);
     }
-    
-    // [HttpPost]
-    // [ValidateAntiForgeryToken]
-    // public async Task<IActionResult> CreateOrEdit([Bind("Id,Name,Type")] Category category)
-    // {
-    //     if (ModelState.IsValid)
-    //     {
-    //         if (category.Id == 0)
-    //              _categoryRepo.AddCategory(category);
-    //         else
-    //              _categoryRepo.UpdateCategory(category);
-    //         return RedirectToAction(nameof(Index));
-    //     }
-    //     return View(category);
-    // }
-    //
+
     
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> CreateOrEdit([Bind("Id,Name,Type")] Category category)
+    public async Task<IActionResult> CreateOrEdit(CreateCategoryViewModel model)
     {
-        try
+        if (ModelState.IsValid)
         {
-            if (ModelState.IsValid)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var category = new Category
             {
-                if (category == null)
-                {
-                    return BadRequest("Invalid data supplied.");
-                }
+                Id = model.Id,
+                Name = model.Name,
+                Type = model.Type,
+                UserId = userId,
+            };
 
-                if (category.Id == 0)
-                {
-                    await _categoryRepo.AddCategory(category);
-                }
-                else
-                {
-                    var categoryExist = _categoryRepo.GetCategoryById(category.Id);
-                    if (categoryExist == null)
-                    {
-                        return NotFound("Category not found.");
-                    }
-
-                    categoryExist.Name = category.Name;
-                    categoryExist.Type = category.Type;
-                    await _categoryRepo.UpdateCategory(categoryExist);
-                }
-
-                return RedirectToAction(nameof(Index));
+            if (model.Id == 0)
+            {
+                await _categoryRepo.AddCategory(category);
             }
-            return View(category);
+            else
+            {
+                var categoryExist = _categoryRepo.GetCategoryById(model.Id);
+                if (categoryExist == null)
+                {
+                    return NotFound("Category not found.");
+                }
+
+                categoryExist.Name = model.Name;
+                categoryExist.Type = model.Type;
+                await _categoryRepo.UpdateCategory(categoryExist);
+            }
+
+            return RedirectToAction(nameof(Index));
         }
-        catch (Exception ex)
-        {
-            return BadRequest("An unexpected error occurred while processing your request." + ex.Message);
-        }
+
+        return View();
     }
+
+
 
 
 

@@ -1,22 +1,32 @@
-@model RegisterViewModel
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model PersonalFinanceManagement.ViewModels.RegisterViewModel
+@{
+    Layout = "_Login";
+}
+@{
+    ViewData["Title"] = "Register";
+}
 
-<h2>Register</h2>
-
-<form asp-action="Register" method="post" novalidate>
-    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+<form asp-action="Register" asp-controller="Account" method="post">
+    <div asp-validation-summary="All" class="alert alert-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" name="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
     <div class="form-group">
         <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
+        <input asp-for="Email" name="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" />
+        <input asp-for="Password" name="Password" class="form-control" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" class="form-control" />
+        <input asp-for="ConfirmPassword" name="ConfirmPassword" class="form-control" />
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
     <div class="form-group">

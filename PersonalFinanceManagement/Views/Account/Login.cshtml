@@ -1,28 +1,105 @@
-@model LoginViewModel
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model PersonalFinanceManagement.ViewModels.LoginViewModel 
+@{
+    Layout = "_Login";
+}
+@{
+    ViewData["Title"] = "Login";
+}
+<!DOCTYPE html>
+<html lang="en">
 
-<h2>Login</h2>
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<form asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" novalidate>
-    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-    <div class="form-group form-check">
+   <!-- Font Awesome CDN -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+     integrity="sha512-xxKVNyurCAW/01QE6LPGEqimVjkX9+W7PGvMTLsbO0/fTPFJU+azbC187e7BKDKYyh7XIbG49UhG3T9wyi2BkA=="
+     crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+   <!-- Bootstrap CDN and custom CSS -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css"
+     integrity="sha512-+BC9KKs+q+nC/flgmwU/dHdLHsWFSKRKG8wwp5mTZ1i3UpZgeZuE7kEdtJ5RGDr86IBroJ6tgRKzVwRIt0XLkQ=="
+     crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+   <!-- Login/Register form section -->
+   <section class="background-radial-gradient overflow-hidden">
+      <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+         <div class="row gx-lg-5  mb-5">
+            <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+               <h1 class="my-5 display-5 fw-bold ls-tight" style="color:#38bdf8">
+                  Manage Your Finances <br />
+                  <span class="text-white">   with Eases</span>
+               </h1>
+               <p class="mb-4 opacity-70 text-white">
+                  Sign up now to easily track your expenses, gain insights into your spending habits, and take control of your finances.
+               </p>
+            </div>
+
+            <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+               <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+               <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+               <div class="card bg-dark text-white">
+                  <div class="card-body px-4 py-5 px-md-5">
+                     <form asp-action="Login" asp-controller="Account" method="post">
+    <div asp-validation-summary="All"></div>
+
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                           <input type="email" asp-for="Email"  id="form3Example3" class="form-control" style="background-color:#F2F2F2; color:#000" />
+                           <label class="form-label"  asp-for="Email">Email address</label>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-4">
+                           <input asp-for="Password" type="password" id="form3Example4" class="form-control" style="background-color:#F2F2F2; color:#000" />
+                           <label asp-for="Password" class="form-label" for="form3Example4">Password</label>
+                                   <span asp-validation-for="Password"></span>
+
+                        </div>
+   <div class="form-check">
         <input asp-for="RememberMe" class="form-check-input" />
-        <label class="form-check-label" asp-for="RememberMe">Remember me?</label>
+        <label class="form-check-label" asp-for="RememberMe">@Html.DisplayNameFor(m => m.RememberMe)</label>
     </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Login</button>
-    </div>
-</form>
+                
 
-<div>
-    <a href="/Account/Register">Register as a new user</a>
-</div>
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block mb-4" style="background-color:#38bdf8">
+                           Sign up
+                        </button>
+
+                        <!-- Register buttons -->
+                        <div class="text-center">
+                           <p>Or are you new?</p>
+                              <a asp-controller="Account" asp-action="Register" style="background-color:#38bdf8" class="btn ">Register</a>
+ 
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- Optional JavaScript -->
+   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+     integrity="sha512-ZvpU/LOZo0W+AE/1/E8a/Hz6ZjqnaMIPIo5f1IcPiQ/zyKLrD3Mm3JB16a0PVDaVOBRyHCOQ2w5uQkL86U8eA=="
+     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"
+     integrity="sha512-+48rZwjaK3fAYr44S2UVtWa4dHzZV2Ur59xQhef7PQOWd5wSZR/POuV8WRtLXX+wHiueXwhXWavJX/L+scX8oA=="
+     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"
+     integrity="sha512-9XlBOhmV+4tN6z3KMNehGHLM4QGjzD1UrHF1Vd2iN7Xb8qvWgMq0vn7v4wFtHtERaJomdJ09xORPecsATWd7Lw=="
+     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</body>
+
+</html>

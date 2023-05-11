@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using PersonalFinanceManagement.Filters;
 using PersonalFinanceManagement.Models;
 using PersonalFinanceManagement.Repositories;
 
@@ -10,18 +11,32 @@ Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBaFt+QHJq
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+
 builder.Services.AddDbContext<MyDbContext>(opts =>
 {
     opts.UseSqlServer(builder.Configuration["ConnectionStrings:PersonalFinanceConnection"]);
 });
+builder.Services.AddMvc(options =>
+{
+    options.Filters.Add(new RequireLoginFilter()); // Add the filter to all controller actions
+});
+
+
     builder.Services.AddIdentity<User, IdentityRole>(options =>
     {
         // Configure the password requirements if necessary
-        options.Password.RequiredLength = 6;
         options.Password.RequireDigit = false;
         options.Password.RequireLowercase = false;
         options.Password.RequireNonAlphanumeric = false;
         options.Password.RequireUppercase = false;
+        options.Password.RequiredLength = 8;
+        options.Password.RequiredUniqueChars = 1;
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+        options.Lockout.MaxFailedAccessAttempts = 5;
+        options.Lockout.AllowedForNewUsers = true;
+        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+        options.User.RequireUniqueEmail = true;
     })
     .AddEntityFrameworkStores<MyDbContext>()
     .AddDefaultTokenProviders();
@@ -38,6 +53,8 @@ builder.Services.AddScoped<ISpendingRepository, SpendingRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
+builder.Services.AddScoped<SignInManager<User>, SignInManager<User>>();
+builder.Services.AddScoped<UserManager<User>, UserManager<User>>();
 
 var app = builder.Build();
 
@@ -54,12 +71,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 
-app.MapRazorPages(); 
 app.UseEndpoints(endpoints =>
 {
+    endpoints.MapRazorPages();
+
     endpoints.MapControllerRoute(
         name: "transaction-create",
         pattern: "Transaction/Create",
@@ -76,6 +95,11 @@ app.UseEndpoints(endpoints =>
         defaults: new { controller = "Category", action = "CreateOrEdit" });
 
     endpoints.MapControllerRoute(
+        name: "category-edit",
+        pattern: "Category/Edit/{id?}",
+        defaults: new { controller = "Category", action = "CreateOrEdit" });
+
+    endpoints.MapControllerRoute(
         name: "category-index",
         pattern: "Category",
         defaults: new { controller = "Category", action = "Index" });
@@ -83,6 +107,17 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    endpoints.MapControllerRoute(
+        name: "account",
+        pattern: "Account/Login",
+        defaults: new { controller = "Account", action = "Login" });
+    
+    endpoints.MapControllerRoute(
+        name: "account",
+        pattern: "Account/Register",
+        defaults: new { controller = "Account", action = "Register" });
 });
+
 
 app.Run();

@@ -1,4 +1,3 @@
-
 @model PersonalFinanceManagement.Models.Category
 
 @{
@@ -12,6 +11,8 @@
             <form asp-action="CreateOrEdit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" name="Id" value="@Model.Id" />
+                
+             
                 <div class="mb-3">
                     <div class='e-btn-group custom-rbt-group'>
                         <input type="radio" id="radioleft" name="Type" value="Expense" checked="@(Model.Type=="Expense")" />

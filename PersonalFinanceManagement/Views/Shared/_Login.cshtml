@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <title>@ViewData["Title"] - Personal Finance</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-dark text-white">
+
+    <div class="wrapper flex-grow-1">
+        <main role="main" class="container mt-5">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer py-3  bg-gradient text-white sticky-footer">
+        <div class="container">
+            <span class="text-muted">&copy; 2023 Personal Finance Management by Khang Nguyen</span>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
