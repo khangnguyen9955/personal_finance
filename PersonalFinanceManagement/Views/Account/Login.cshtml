@@ -25,7 +25,10 @@
      crossorigin="anonymous" referrerpolicy="no-referrer" />
    <link rel="stylesheet" href="style.css">
 </head>
-
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-success">@ViewBag.Message</div>
+}
 <body>
    <!-- Login/Register form section -->
    <section class="background-radial-gradient overflow-hidden">
@@ -48,26 +51,27 @@
                <div class="card bg-dark text-white">
                   <div class="card-body px-4 py-5 px-md-5">
                      <form asp-action="Login" asp-controller="Account" method="post">
-    <div asp-validation-summary="All"></div>
+                        <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
 
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                           <input type="email" asp-for="Email"  id="form3Example3" class="form-control" style="background-color:#F2F2F2; color:#000" />
-                           <label class="form-label"  asp-for="Email">Email address</label>
+                           <input type="email" asp-for="Email" id="form3Example3" class="form-control" style="background-color:#F2F2F2; color:#000"/>
+                           <label class="form-label" asp-for="Email">Email address</label>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                           <input asp-for="Password" type="password" id="form3Example4" class="form-control" style="background-color:#F2F2F2; color:#000" />
+                           <input asp-for="Password" type="password" id="form3Example4" class="form-control" style="background-color:#F2F2F2; color:#000"/>
                            <label asp-for="Password" class="form-label" for="form3Example4">Password</label>
-                                   <span asp-validation-for="Password"></span>
+                           <span asp-validation-for="Password"></span>
 
                         </div>
-   <div class="form-check">
-        <input asp-for="RememberMe" class="form-check-input" />
-        <label class="form-check-label" asp-for="RememberMe">@Html.DisplayNameFor(m => m.RememberMe)</label>
-    </div>
-                
+                        <div class="form-check">
+                           <input asp-for="RememberMe" class="form-check-input"/>
+                           <label class="form-check-label" asp-for="RememberMe">@Html.DisplayNameFor(m => m.RememberMe)</label>
+                        </div>
+
 
                         <!-- Submit button -->
                         <button type="submit" class="btn btn-primary btn-block mb-4" style="background-color:#38bdf8">
@@ -77,8 +81,8 @@
                         <!-- Register buttons -->
                         <div class="text-center">
                            <p>Or are you new?</p>
-                              <a asp-controller="Account" asp-action="Register" style="background-color:#38bdf8" class="btn ">Register</a>
- 
+                           <a asp-controller="Account" asp-action="Register" style="background-color:#38bdf8" class="btn ">Register</a>
+
                         </div>
                      </form>
                   </div>

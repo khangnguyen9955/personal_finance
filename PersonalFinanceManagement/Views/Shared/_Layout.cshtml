@@ -1,70 +1,4 @@
-﻿@* <!DOCTYPE html> *@
-@* <html lang="en"> *@
-@* <head> *@
-@*     <meta charset="utf-8"/> *@
-@*     <meta name="viewport" content="width=device-width, initial-scale=1.0"/> *@
-@*     <title>@ViewData["Title"] - PersonalFinanceManagement</title> *@
-@*       <environment > *@
-@*         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/> *@
-@*         <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/> *@
-@*         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/> *@
-@*     <link rel="stylesheet" href="~/PersonalFinanceManagement.styles.css" asp-append-version="true"/> *@
-@*          *@
-@*         </environment> *@
-@* </head> *@
-@* <body> *@
-@* <header> *@
-@*     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"> *@
-@*         <div class="container-fluid"> *@
-@*             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PersonalFinanceManagement</a> *@
-@*             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" *@
-@*                     aria-expanded="false" aria-label="Toggle navigation"> *@
-@*                 <span class="navbar-toggler-icon"></span> *@
-@*             </button> *@
-@*             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"> *@
-@*                 <ul class="navbar-nav flex-grow-1"> *@
-@*                     <li class="nav-item"> *@
-@*                         <a class="nav-link text-dark" href="/Transaction">Transaction List</a> *@
-@*                     </li> *@
-@*                     <li class="nav-item"> *@
-@*                         <a class="nav-link text-dark" href="/Spending">Spending List</a> *@
-@*                     </li> *@
-@*                     <li class="nav-item"> *@
-@*                         <a class="nav-link text-dark" href="/Income">Income List</a> *@
-@*                     </li> *@
-@*                     <li class="nav-item"> *@
-@*                         <a class="nav-link text-dark" href="/Category">Category List</a> *@
-@*                     </li> *@
-@*                 </ul> *@
-@*                 <div class="navbar-nav"> *@
-@*                     @if (!User.Identity.IsAuthenticated) *@
-@*                     { *@
-@*                         <a class="nav-link text-dark" href="/Identity/Account/Register">Register</a> *@
-@*                         <a class="nav-link text-dark" href="/Identity/Account/Login">Login</a> *@
-@*                     } *@
-@*                 </div> *@
-@*             </div> *@
-@*         </div> *@
-@*     </nav> *@
-@* </header> *@
-@* <div class="container"> *@
-@*     <main role="main" class="pb-3"> *@
-@*         @RenderBody() *@
-@*     </main> *@
-@* </div> *@
-@* *@
-@* <footer class="border-top footer text-muted"> *@
-@*     <div class="container"> *@
-@*         &copy; 2023 - PersonalFinanceManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
-@*     </div> *@
-@* </footer> *@
-@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
-@* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
-@* <script src="~/js/site.js" asp-append-version="true"></script> *@
-@* @await RenderSectionAsync("Scripts", required: false) *@
-@* </body> *@
-@* </html> *@
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,16 +20,37 @@
 
     <div class="dock-target">
 
-        <nav class="navbar sticky-top">
-            <div class="container-fluid py-2 px-4">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <div>
-                    <i class="fa-solid fa-bell"></i>
-                    <i class="fa-solid fa-message"></i>
-                    <img class="profile-pic" src="~/profile.jpg" />
+<nav class="navbar sticky-top">
+    <div class="container-fluid py-2 px-4">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <div>
+            <i class="fa-solid fa-bell"></i>
+            <i class="fa-solid fa-message"></i>
+            
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        @User.Identity.Name
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile">View Profile</a></li>
+                        <li>
+                            <form asp-controller="Account" asp-action="Logout" method="post">
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-        </nav>
+            }
+        </div>
+    </div>
+</nav>
+
+
+
+
+
 
 
         <div class="main-content">

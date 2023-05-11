@@ -19,22 +19,13 @@ public class CategoryController: Controller
 
     public IActionResult Index()
     {
-        var categories = _categoryRepo.GetAllCategories().ToList();
+        string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var categories = _categoryRepo.GetAllCategories()
+            .Where(c => c.UserId == currentUserId)
+            .ToList();
         return View(categories);
     }
-    // [HttpGet]
-    // public IActionResult CreateOrEdit(int id = 0)
-    // {
-    //     if (id == 0)
-    //     {
-    //         return View(new Category());
-    //     }
-    //     else
-    //     {
-    //         return View(_categoryRepo.GetCategoryById(id));
-    //         
-    //     }
-    // }
+
     [HttpGet]
     public IActionResult CreateOrEdit(int id = 0)
     {

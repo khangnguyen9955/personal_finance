@@ -117,6 +117,14 @@ app.UseEndpoints(endpoints =>
         name: "account",
         pattern: "Account/Register",
         defaults: new { controller = "Account", action = "Register" });
+    endpoints.MapControllerRoute(
+        name: "account",
+        pattern: "Account/Logout",
+        defaults: new { controller = "Account", action = "Logout" });
+    endpoints.MapControllerRoute(
+        name: "account",
+        pattern: "Account/Profile",
+        defaults: new { controller = "Account", action = "Profile" });
 });
 
 
