@@ -9,4 +9,6 @@ public interface ISpendingRepository
     void AddSpending(Spending spending);
     void UpdateSpending(Spending spending);
     void DeleteSpending(int id);
+    Task<double> GetTotalSpendingLast7DaysAsync();
+
 }

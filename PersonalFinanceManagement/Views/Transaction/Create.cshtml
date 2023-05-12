@@ -1,46 +1,55 @@
 @model  PersonalFinanceManagement.ViewModels.TransactionViewModel
-
-
-
-
-<h2>Add a new transaction</h2>
-
-@using (Html.BeginForm("Create", "Transaction"))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-group">
-        <label for="type">Transaction Type:</label>
-        <select class="form-control" id="type" name="transactionType">
-            <option value="income">Income</option>
-            <option value="spending">Spending</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="category">Category:</label>
-        <select class="form-control" id="category" name="categoryId">
-            @foreach (var category in Model.Categories)
-            {
-                <option value="@category.Id">@category.Name</option>
-            }
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="amount">Amount:</label>
-        <input type="text" class="form-control" id="amount" name="amount" placeholder="Enter amount">
-    </div>
-
-    <div class="form-group">
-        <label for="description">Description:</label>
-        <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
-    </div>
-
-    <div class="form-group">
-        <label for="date">Date:</label>
-        <input type="text" class="form-control" id="date" name="date">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+@{
+    ViewData["PageTitle"] = Model.Id == 0 ? "Create a new transaction" : "Edit transaction";
 }
+<div class="row">
+<div class="col-md-7">
+    <div class="widget p-5" style="background-color:#212b36">
+        <form asp-action="Create">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="TransactionId" value="@Model.Id" />
+            <div class="mb-3">
+                <div class='e-btn-group custom-rbt-group'>
+                    <input type="radio" id="radioleft" name="TransactionType" value="spending" checked="@(Model.TransactionType=="spending")" />
+                    <label class="e-btn" for="radioleft">Spending</label>
+                    <input type="radio" id="radiomiddle" name="TransactionType" value="income" checked="@(Model.TransactionType=="income")" />
+                    <label class="e-btn" for="radiomiddle">Income</label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <ejs-dropdownlist id="ddlCategory" ejs-for="CategoryId"
+                                  dataSource="@ViewBag.Categories" placeholder="Category"
+                                  floatLabelType="Always" allowFiltering="true" ignoreAccent="true"
+                                  filterType="Contains" popupHeight="220px">
+                    <e-dropdownlist-fields value="CategoryId" text="TitleWithIcon"></e-dropdownlist-fields>
+                </ejs-dropdownlist>
+                <span asp-validation-for="CategoryId" class="text-danger fs-6"></span>
+            </div>
+            <div class="mb-3">
+                <ejs-numerictextbox id="amount" ejs-for="Amount"
+                                    placeholder="Amount" floatLabelType="Always"
+                                    min=0 format="c0"></ejs-numerictextbox>
+                <span asp-validation-for="Amount" class="text-danger fs-6"></span>
+            </div>
+
+            <div class="mb-3">
+                <ejs-textbox id="note" placeholder="Note" ejs-for="Description"
+                             floatLabelType="Always" multiline="true"></ejs-textbox>
+            </div>
+            <div class="mb-3">
+                <ejs-datepicker id="date" ejs-for="Date"
+                                placeholder="Date" floatLabelType="Always"
+                                format="MMM-dd-yy"></ejs-datepicker>
+            </div>
+
+            <ejs-button id="submit" type="submit" content="Submit" cssClass="e-success"></ejs-button>
+        </form>
+    </div>
+</div>
+    <div class="col-md-5">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-money-bill-transfer fa-2xl"></i>
+        </div>
+    </div>
+</div>

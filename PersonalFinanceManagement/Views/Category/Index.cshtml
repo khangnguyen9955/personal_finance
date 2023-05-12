@@ -1,30 +1,8 @@
-@* @model List<PersonalFinanceManagement.Models.Category> *@
-@* *@
-@* <h2>Category List</h2> *@
-@* *@
-@* <table class="table"> *@
-@*     <thead> *@
-@*         <tr> *@
-@*             <th>Name</th> *@
-@*             <th></th> *@
-@*         </tr> *@
-@*     </thead> *@
-@* <tbody> *@
-@*     @foreach (var category in Model) *@
-@*     { *@
-@*         <tr> *@
-@*             <td>@category.Name</td> *@
-@*             <td><a asp-action="Create" asp-route-categoryId="@category.Id">Create</a></td> *@
-@*         </tr> *@
-@*     } *@
-@* </tbody> *@
-@* *@
-@* </table> *@
-@model IEnumerable<PersonalFinanceManagement.Models.Category>
+@model IEnumerable<PersonalFinanceManagement.ViewModels.CategoryViewModel>
 
 @{
     ViewData["PageTitle"] = "Categories";
-    ViewData["PageActionText"] = "+ New Category";
+    ViewData["PageActionText"] = "+ Add Category";
     ViewData["PageActionUrl"] = "/Category/CreateOrEdit";
 }
 
@@ -41,11 +19,11 @@
             </e-grid-columns>
         </ejs-grid>
     </div>
-    @* <div class="col-md-5"> *@
-    @*     <div class="widget h-100 d-flex justify-content-center align-items-center"> *@
-    @*         <i class="fa-solid fa-shapes fa-2xl"></i> *@
-    @*     </div> *@
-    @* </div> *@
+    <div class="col-md-5">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-shapes fa-2xl"></i>
+        </div>
+    </div>
 </div>
 
 <script id="typeColumnTemplate" type="text/x-template">
@@ -58,10 +36,10 @@
 
 <script id="actionColumnTemplate" type="text/x-template">
     <div class="d-flex flex-row justify-content-start">
-        <a class="btn btn-sm no-a-decoration" href="/Category/AddOrEdit/${CategoryId}">
+        <a class="btn btn-sm no-a-decoration" href="/Category/Edit/${Id}">
             <i class="fa-solid fa-pen fa-lg"></i>
         </a>
-        <form action="/Category/Delete/${CategoryId}" method="post">
+        <form action="/Category/Delete/${Id}" method="post">
             @Html.AntiForgeryToken()
             <button type="submit" class="btn btn-sm btn-link no-a-decoration"
             onclick="return confirm(&quot;Are sure to delete this record?&quot;)">

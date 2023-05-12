@@ -1,10 +1,10 @@
 @model  PersonalFinanceManagement.ViewModels.TransactionViewModel
 
 <h1>Transaction History</h1>
-
-<p>Total Income: @Model.TotalIncome.ToString("C")</p>
-<p>Total Spending: @Model.TotalSpending.ToString("C")</p>
-<p>Total Profit: @Model.TotalProfit.ToString("C")</p>
+@* *@
+@* <p>Total Income: @Model.TotalIncome.ToString("C")</p> *@
+@* <p>Total Spending: @Model.TotalSpending.ToString("C")</p> *@
+@* <p>Total Profit: @Model.TotalProfit.ToString("C")</p> *@
 <a class="btn btn-primary" href="@Url.Action("Create", "Transaction")">Create Transaction</a>
 
 
@@ -12,37 +12,4 @@
 
 <h2>Transaction List</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Amount</th>
-            <th>Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var income in Model.Incomes)
-        {
-            <tr>
-                <td>Income</td>
-                <td>@income.Description</td>
-                <td>@income.Category.Name</td>
-                <td>@income.Amount.ToString("C")</td>
-                <td>@income.Date.ToShortDateString()</td>
-            </tr>
-        }
 
-        @foreach (var spending in Model.Spendings)
-        {
-            <tr>
-                <td>Spending</td>
-                <td>@spending.Description</td>
-                <td>@spending.Category.Name</td>
-                <td>@spending.Amount.ToString("C")</td>
-                <td>@spending.Date.ToShortDateString()</td>
-            </tr>
-        }
-    </tbody>
-</table>

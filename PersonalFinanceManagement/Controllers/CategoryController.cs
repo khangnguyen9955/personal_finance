@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PersonalFinanceManagement.Models;
 using PersonalFinanceManagement.Repositories;
@@ -7,13 +8,16 @@ using PersonalFinanceManagement.ViewModels;
 
 namespace PersonalFinanceManagement.Controllers;
 
-
+[Authorize]
 public class CategoryController: Controller
 {
     private readonly ICategoryRepository _categoryRepo;
+    private readonly UserManager<User> _userManager;
 
-    public CategoryController(ICategoryRepository categoryRepo)
+  
+    public CategoryController(ICategoryRepository categoryRepo, UserManager<User> userManager)
     {
+        _userManager = userManager;
         _categoryRepo = categoryRepo;
     }
 
@@ -22,6 +26,7 @@ public class CategoryController: Controller
         string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var categories = _categoryRepo.GetAllCategories()
             .Where(c => c.UserId == currentUserId)
+            .Select(c => new  CategoryViewModel{ Id = c.Id, Name = c.Name, Type = c.Type })
             .ToList();
         return View(categories);
     }
@@ -43,11 +48,11 @@ public class CategoryController: Controller
         return View(category);
     }
 
-    
+
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> CreateOrEdit(CreateCategoryViewModel model)
+    public async Task<IActionResult> CreateOrEdit(CategoryViewModel model)
     {
         if (ModelState.IsValid)
         {
@@ -83,8 +88,31 @@ public class CategoryController: Controller
 
         return View();
     }
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return Challenge();
+        }
 
+        var category = _categoryRepo.GetCategoryById(id);
+        if (category == null || category.UserId != user.Id)
+        {
+            return NotFound();
+        }
 
+        _categoryRepo.DeleteCategory(id);
+        return RedirectToAction(nameof(Index));
+    }
+    
+    
+    
+    // " 1 + 2 * 3 / 4 * 5 + 3 * 2" /
+    // [1,  + ,  2 * 3 / 4 * 5, + , 3 * 2  ]
+        
 
 
 

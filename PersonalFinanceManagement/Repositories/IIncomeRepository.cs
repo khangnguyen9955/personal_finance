@@ -8,4 +8,6 @@ public interface IIncomeRepository
     void AddIncome(Income income);
     void UpdateIncome(Income income);
     void DeleteIncome(int id);
+    Task<double> GetTotalIncomeLast7DaysAsync();
+
 }

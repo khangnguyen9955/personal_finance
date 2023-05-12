@@ -25,11 +25,9 @@
                <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
                <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
 
-               <div class="card bg-dark text-white">
+               <div class="card bg-white text-black">
                   <div class="card-body px-4 py-5 px-md-5">
                       <form asp-action="Register" asp-controller="Account" method="post">
-                          
-                          <div asp-validation-summary="All" class="alert alert-danger"></div>
                           <div class="form-group">
                               <label asp-for="Name"></label>
                               <input asp-for="Name" name="Name" class="form-control"/>
@@ -50,13 +48,14 @@
                               <input asp-for="ConfirmPassword" name="ConfirmPassword" class="form-control"/>
                               <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                           </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn " style="background-color:#38bdf8">Register</button>
+                                                    </div>
                           <div class="text-center">
                               <p>Do you have an account?</p>
-                              <a asp-controller="Account" asp-action="Login" style="background-color:#38bdf8" class="btn ">Login</a>
+                              <a asp-controller="Account" asp-action="Login" style="background-color:#38bdf8" class="btn ">Signup</a>
                           </div>
-                          <div class="form-group">
-                              <button type="submit" class="btn btn-primary">Register</button>
-                          </div>
+
                       </form>
                   </div>
                </div>

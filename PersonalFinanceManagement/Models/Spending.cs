@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PersonalFinanceManagement.Models;
 
-public class Spending
+public class Spending : ITransaction
 {
     public int Id { get; set; }
 

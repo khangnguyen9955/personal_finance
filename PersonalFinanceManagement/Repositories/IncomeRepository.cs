@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using PersonalFinanceManagement.Models;
 
 namespace PersonalFinanceManagement.Repositories;
@@ -41,5 +42,17 @@ public class IncomeRepository : IIncomeRepository
             _context.Incomes.Remove(income);
             _context.SaveChanges();
         }
+    }
+    public async Task<double> GetTotalIncomeLast7DaysAsync()
+    {
+        // Get DateTime object for 7 days ago
+        var sevenDaysAgo = DateTime.Today.AddDays(-7);
+
+        // Calculate total income for last 7 days
+        var totalIncome = await _context.Incomes
+            .Where(i => i.Date >= sevenDaysAgo)
+            .SumAsync(i => i.Amount);
+
+        return totalIncome;
     }
 }

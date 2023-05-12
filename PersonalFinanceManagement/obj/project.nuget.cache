@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KOi8BVZWpRT3t6I1XsCOvX0Ocg9OWJoIx0/nhrqfmxteVH/AwRtQ1B7ndjF+e+lwkoMo/DEX2sz7TtdNble60Q==",
+  "dgSpecHash": "L+7e3SbV3zW3jEDvHiz5E7tIWIWrNwKC8nPpTxCqzvGYuxY39WzLiMNfk9sAseqHYOQqThvtITBUCZJJ7INySQ==",
   "success": true,
   "projectFilePath": "/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/PersonalFinanceManagement.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "/Users/khangnguyen9955/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.2.0/microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "/Users/khangnguyen9955/.nuget/packages/microsoft.aspnetcore.authentication.cookies/2.2.0/microsoft.aspnetcore.authentication.cookies.2.2.0.nupkg.sha512",
     "/Users/khangnguyen9955/.nuget/packages/microsoft.aspnetcore.authentication.core/2.2.0/microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
+    "/Users/khangnguyen9955/.nuget/packages/microsoft.aspnetcore.cors/2.2.0/microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
     "/Users/khangnguyen9955/.nuget/packages/microsoft.aspnetcore.cryptography.internal/6.0.15/microsoft.aspnetcore.cryptography.internal.6.0.15.nupkg.sha512",
     "/Users/khangnguyen9955/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/6.0.15/microsoft.aspnetcore.cryptography.keyderivation.6.0.15.nupkg.sha512",
     "/Users/khangnguyen9955/.nuget/packages/microsoft.aspnetcore.dataprotection/2.2.0/microsoft.aspnetcore.dataprotection.2.2.0.nupkg.sha512",

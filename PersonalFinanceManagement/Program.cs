@@ -11,7 +11,15 @@ Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBaFt+QHJq
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        builder => builder
+            .WithOrigins("http://localhost:3000", "https://localhost:7238")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+});
 
 builder.Services.AddDbContext<MyDbContext>(opts =>
 {
@@ -106,7 +114,7 @@ app.UseEndpoints(endpoints =>
 
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "{controller=Dashboard}/{action=Index}/{id?}");
 
     endpoints.MapControllerRoute(
         name: "account",
@@ -127,5 +135,6 @@ app.UseEndpoints(endpoints =>
         defaults: new { controller = "Account", action = "Profile" });
 });
 
+app.UseCors("CorsPolicy");
 
 app.Run();

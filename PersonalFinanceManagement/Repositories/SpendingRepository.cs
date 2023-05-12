@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using PersonalFinanceManagement.Models;
 
 namespace PersonalFinanceManagement.Repositories;
@@ -41,5 +42,17 @@ public class SpendingRepository : ISpendingRepository
             _context.Spendings.Remove(spending);
             _context.SaveChanges();
         }
+    }
+    public async Task<double> GetTotalSpendingLast7DaysAsync()
+    {
+        // Get DateTime object for 7 days ago
+        var sevenDaysAgo = DateTime.Today.AddDays(-7);
+
+        // Calculate total spending for last 7 days
+        var totalSpending = await _context.Spendings
+            .Where(s => s.Date >= sevenDaysAgo)
+            .SumAsync(s => s.Amount);
+
+        return totalSpending;
     }
 }
