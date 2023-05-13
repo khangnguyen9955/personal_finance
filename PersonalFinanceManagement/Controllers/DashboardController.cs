@@ -1,6 +1,7 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PersonalFinanceManagement.Models;
 using PersonalFinanceManagement.Repositories;
 
@@ -49,16 +50,28 @@ namespace PersonalFinanceManagement.Controllers;
             //     .OrderByDescending(l => l.amount)
             //     .ToList();
             //
+            // ViewBag.DoughnutChartData = _spendingRepo.GetAllSpendings()
+            //     .GroupBy(s => s.CategoryId)
+            //     .Select(g => new
+            //     {
+            //         CategoryName = g.First().Category.Name,
+            //         Amount = g.Sum(s => s.Amount),
+            //         FormattedAmount = g.Sum(s => s.Amount).ToString("C0", cultureInfo),
+            //     })
+            //     .OrderByDescending(g => g.Amount)
+            //     .ToList();
             ViewBag.DoughnutChartData = _spendingRepo.GetAllSpendings()
+                .ToList()
                 .GroupBy(s => s.CategoryId)
                 .Select(g => new
                 {
                     CategoryName = g.First().Category.Name,
                     Amount = g.Sum(s => s.Amount),
-                    FormattedAmount = g.Sum(s => s.Amount).ToString("C0", cultureInfo),
+                    FormattedAmount = g.Sum(s => s.Amount).ToString("C0", CultureInfo.InvariantCulture),
                 })
                 .OrderByDescending(g => g.Amount)
                 .ToList();
+
 
             //Spline Chart - Income vs Expense
 
@@ -119,30 +132,18 @@ namespace PersonalFinanceManagement.Controllers;
                                           income = income == null ? 0 : income.income,
                                           spending = spending == null ? 0 : spending.spending,
                                       };
-            //Recent Transactions
-            // ViewBag.RecentTransactions = await _context.Transactions
-            //     .Include(i => i.Category)
-            //     .OrderByDescending(j => j.Date)
-            //     .Take(5)
-            //     .ToListAsync();
-            // var recentTransactions =_spendingRepo.GetAllSpendings()
-            //     .Concat<Income>(_incomeRepo.GetAllIncomes())
-            //     .OrderByDescending(t => t.Date)
-            //     .Take(5)
-            //     .ToList();
-
-            // var recentTransactions = _spendingRepo.GetAllSpendings()
-            //     .Concat(_incomeRepo.GetAllIncomes())
-            //     .OrderByDescending(t => t.Date)
-            //     .Take(5)
-            //     .ToList();
+           
             var recentTransactions = _spendingRepo.GetAllSpendings()
-                .Select(s => new { s.Id, s.Description, s.Amount, s.Date, s.CategoryId, s.Category, s.UserId, s.User, s.CreatedAt, s.UpdatedAt })
-                .Concat(_incomeRepo.GetAllIncomes()
-                    .Select(i => new { i.Id, i.Description, i.Amount, i.Date, i.CategoryId, i.Category, i.UserId, i.User, i.CreatedAt, i.UpdatedAt }))
+                .Include(s => s.Category)
+                .Include(s => s.User)
+                .Select(s => new { s.Id, s.Description, s.Amount, s.Date, s.CategoryId, CategoryName = s.Category.Name, s.UserId,  s.CreatedAt, s.UpdatedAt })
+                .Concat(_incomeRepo.GetAllIncomes().Include(i => i.Category)
+                    .Include(i => i.User)
+                    .Select(i => new { i.Id, i.Description, i.Amount, i.Date, i.CategoryId, CategoryName = i.Category.Name, i.UserId,  i.CreatedAt, i.UpdatedAt }))
                 .OrderByDescending(t => t.Date)
                 .Take(5)
                 .ToList();
+ 
 
 
             ViewBag.RecentTransactions = recentTransactions;

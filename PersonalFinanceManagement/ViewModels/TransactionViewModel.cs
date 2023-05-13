@@ -26,7 +26,7 @@ public class TransactionViewModel
 
     [TransactionType(ErrorMessage = "Please select a valid transaction type.")]
     public string TransactionType { get; set; } // "income" or "spending"
-    public List<Category> Categories { get; set; }
+    public List<Category>? Categories { get; set; }
 
 }
 

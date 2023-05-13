@@ -12,9 +12,12 @@ public class SpendingRepository : ISpendingRepository
         _context = context;
     }
 
-    public IEnumerable<Spending> GetAllSpendings()
+    public IQueryable<Spending> GetAllSpendings()
     {
-        return _context.Spendings.ToList();
+        // return _context.Incomes.ToList();
+        return _context.Spendings
+            .Include(s => s.Category)
+            .Include(s => s.User);
     }
 
     public Spending GetSpendingById(Guid id)

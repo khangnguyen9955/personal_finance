@@ -2,19 +2,18 @@
 
 @{
     ViewData["PageTitle"] = "Categories";
-    ViewData["PageActionText"] = "+ Add Category";
-    ViewData["PageActionUrl"] = "/Category/CreateOrEdit";
 }
 
 
 <div class="row">
     <div class="col-md-7">
+         <a class="btn btn-success" href="/Category/Create"> + Add Category </a>
         <ejs-grid id="categories" dataSource="@Model" gridLines="None"
                   allowSorting="true" allowPaging="true">
             <e-grid-pagesettings pageSize="5"></e-grid-pagesettings>
             <e-grid-columns>
                 <e-grid-column headerText="Name" field="Name" width="150px"></e-grid-column>
-          <e-grid-column headerText="Type" template="#typeColumnTemplate" width="150px"></e-grid-column>
+                <e-grid-column headerText="Type" template="#typeColumnTemplate" width="150px"></e-grid-column>
                 <e-grid-column headerText="Actions" template="#actionColumnTemplate" width="100px"></e-grid-column>
             </e-grid-columns>
         </ejs-grid>

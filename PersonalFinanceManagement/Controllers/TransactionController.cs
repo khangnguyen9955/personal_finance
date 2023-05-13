@@ -110,6 +110,7 @@ public async Task<IActionResult> CreateOrEdit(TransactionViewModel transactionVi
     
     if (id == Guid.Empty )// Create new transaction
     {
+        transactionViewModel.Categories = categories;
         if (ModelState.IsValid)
         {
             if (transactionViewModel.TransactionType == "income")

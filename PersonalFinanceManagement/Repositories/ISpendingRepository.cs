@@ -4,7 +4,7 @@ namespace PersonalFinanceManagement.Repositories;
 
 public interface ISpendingRepository
 {
-    IEnumerable<Spending> GetAllSpendings();
+    IQueryable<Spending> GetAllSpendings();
     Spending GetSpendingById(Guid id);
     void AddSpending(Spending spending);
     void UpdateSpending(Spending spending);

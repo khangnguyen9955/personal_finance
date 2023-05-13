@@ -16,9 +16,12 @@ namespace PersonalFinanceManagement.Repositories
             _context = context;
         }
 
-        public IEnumerable<Income> GetAllIncomes()
+        public IQueryable<Income> GetAllIncomes()
         {
-            return _context.Incomes.ToList();
+            // return _context.Incomes.ToList();
+            return _context.Incomes
+                .Include(s => s.Category)
+                .Include(s => s.User);
         }
 
         public Income GetIncomeById(Guid id)
