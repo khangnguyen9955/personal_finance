@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace PersonalFinanceManagement.Models;
 
-public class User : IdentityUser
+public class User : IdentityUser<Guid>
 {
 
     [Range(0, double.MaxValue, ErrorMessage = "The balance field must be a positive number.")]

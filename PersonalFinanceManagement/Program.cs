@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PersonalFinanceManagement.Filters;
 using PersonalFinanceManagement.Models;
@@ -31,7 +32,7 @@ builder.Services.AddMvc(options =>
 });
 
 
-    builder.Services.AddIdentity<User, IdentityRole>(options =>
+    builder.Services.AddIdentity<User, AppRole>(options =>
     {
         // Configure the password requirements if necessary
         options.Password.RequireDigit = false;
@@ -47,7 +48,9 @@ builder.Services.AddMvc(options =>
         options.User.RequireUniqueEmail = true;
     })
     .AddEntityFrameworkStores<MyDbContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddUserStore<UserStore<User,AppRole,MyDbContext, Guid>> ()
+    .AddRoleStore<RoleStore<AppRole,MyDbContext, Guid>>();
     
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -90,7 +93,11 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
         name: "transaction-create",
         pattern: "Transaction/Create",
-        defaults: new { controller = "Transaction", action = "Create" });
+        defaults: new { controller = "Transaction", action = "CreateOrEdit" });
+    endpoints.MapControllerRoute(
+        name: "transaction-create",
+        pattern: "Transaction/Edit/{id?}",
+        defaults: new { controller = "Transaction", action = "CreateOrEdit" });
 
     endpoints.MapControllerRoute(
         name: "transaction-index",

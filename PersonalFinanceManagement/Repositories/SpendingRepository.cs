@@ -17,7 +17,7 @@ public class SpendingRepository : ISpendingRepository
         return _context.Spendings.ToList();
     }
 
-    public Spending GetSpendingById(int id)
+    public Spending GetSpendingById(Guid id)
     {
         return _context.Spendings.FirstOrDefault(s => s.Id == id);
     }
@@ -34,7 +34,7 @@ public class SpendingRepository : ISpendingRepository
         _context.SaveChanges();
     }
 
-    public void DeleteSpending(int id)
+    public void DeleteSpending(Guid id)
     {
         var spending = _context.Spendings.Find(id);
         if (spending != null)

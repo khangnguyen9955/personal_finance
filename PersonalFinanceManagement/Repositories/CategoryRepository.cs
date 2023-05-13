@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using PersonalFinanceManagement.Models;
 
 namespace PersonalFinanceManagement.Repositories;
@@ -20,7 +21,7 @@ public class CategoryRepository : ICategoryRepository
     {
         return _context.Categories.Where(c => c.Type == type);
     }
-    public Category GetCategoryById(int id)
+    public Category GetCategoryById(Guid id)
     {
         return _context.Categories.FirstOrDefault(c => c.Id == id);
     }
@@ -51,7 +52,7 @@ public class CategoryRepository : ICategoryRepository
     }
 
 
-    public void DeleteCategory(int id)
+    public void DeleteCategory(Guid id)
     {
         var category = _context.Categories.Find(id);
         if (category != null)
@@ -60,4 +61,12 @@ public class CategoryRepository : ICategoryRepository
             _context.SaveChanges();
         }
     }
+    
+    public async Task<List<Category>> GetAllCategoriesByUserId(Guid userId)
+    {
+        return await _context.Categories
+            .Where(c => c.UserId == userId)
+            .ToListAsync();
+    }
+
 }

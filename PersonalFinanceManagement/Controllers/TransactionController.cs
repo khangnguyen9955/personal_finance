@@ -44,29 +44,38 @@ public class TransactionController :  Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> CreateOrEditTransaction(int id = 0)
+    public async Task<IActionResult> CreateOrEdit(Guid id) 
     {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            throw new Exception("User is not authenticated.");
+        }
+
+        var categories = await _categoryRepo.GetAllCategoriesByUserId(user.Id);
         var viewModel = new TransactionViewModel
         {
-            Categories = await _categoryRepo.GetAllCategories().AsQueryable().ToListAsync();
-
+            Categories = categories
         };
 
-        if (id != 0)
+        if (id == Guid.Empty) // Create new transaction
         {
-            var spending = await _spendingRepo.GetSpendingByIdAsync(id);
+            viewModel.TransactionType = "income"; // Default to "income" for new transaction
+        }
+        else {
+            var spending = _spendingRepo.GetSpendingById(id);
             if (spending != null)
             {
                 viewModel.Id = spending.Id;
                 viewModel.CategoryId = spending.CategoryId;
-                viewModel.Amount = -spending.Amount; // negative amounts represent spending records
+                viewModel.Amount = spending.Amount; 
                 viewModel.Description = spending.Description;
                 viewModel.Date = spending.Date;
                 viewModel.TransactionType = "spending";
             }
             else
             {
-                var income = await _incomeRepo.GetIncomeByIdAsync(id);
+                var income = _incomeRepo.GetIncomeById(id);
                 if (income != null)
                 {
                     viewModel.Id = income.Id;
@@ -83,15 +92,23 @@ public class TransactionController :  Controller
             }
         }
 
-        await PopulateCategories();
         return View(viewModel);
     }
 
 
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(TransactionViewModel transactionViewModel)
+ [HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> CreateOrEdit(TransactionViewModel transactionViewModel, Guid id)
+{ var user = await _userManager.GetUserAsync(User);
+    if (user == null)
+    {
+        throw new Exception("User is not authenticated.");
+    }
+
+    var categories = await _categoryRepo.GetAllCategoriesByUserId(user.Id);
+    
+    if (id == Guid.Empty )// Create new transaction
     {
         if (ModelState.IsValid)
         {
@@ -104,7 +121,7 @@ public class TransactionController :  Controller
                     CategoryId = transactionViewModel.CategoryId,
                     Date = transactionViewModel.Date,
                     Description = transactionViewModel.Description,
-                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    UserId = Guid.Parse(_userManager.GetUserId(User))
                 };
 
                 // add income to repository
@@ -119,7 +136,7 @@ public class TransactionController :  Controller
                     CategoryId = transactionViewModel.CategoryId,
                     Date = transactionViewModel.Date,
                     Description = transactionViewModel.Description,
-                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    UserId = Guid.Parse(_userManager.GetUserId(User))
                 };
 
                 // add spending to repository
@@ -127,25 +144,81 @@ public class TransactionController :  Controller
             }
             else
             {
-                return BadRequest("Invalid transaction type.");
+                // Invalid transaction type
+                return BadRequest();
             }
-            transactionViewModel.Categories = _categoryRepo.GetAllCategories().ToList();
+           
+            transactionViewModel.Categories = categories;
             return RedirectToAction("Index");
         }
-
-        // If we got this far, something went wrong, redisplay form
-        return View(transactionViewModel);
-
     }
-    private async Task PopulateCategories()
+    else // Edit existing transaction
     {
-        var user = await _userManager.GetUserAsync(User);
-        var categories = _categoryRepo.GetAllCategories()
-            .Where(c => c.UserId == user.Id)
-            .Select(c => new { Id = c.Id, Name = c.Name })
-            .ToList();
-        ViewBag.CategoryList = new SelectList(categories, "Id", "Name");
+        // Determine whether the transaction being edited is an income or a spending
+        var income =  _incomeRepo.GetIncomeById(id);
+        var spending =_spendingRepo.GetSpendingById(id);
+
+        if (income != null)
+        {
+            if (ModelState.IsValid)
+            {
+                income.Amount = transactionViewModel.Amount;
+                income.CategoryId = transactionViewModel.CategoryId;
+                income.Date = transactionViewModel.Date;
+                income.Description = transactionViewModel.Description;
+                
+                _incomeRepo.UpdateIncome(income);
+
+                transactionViewModel.Categories = categories;
+                return RedirectToAction("Index");
+            }
+        }
+        else if (spending != null)
+        {
+            if (ModelState.IsValid)
+            {
+                spending.Amount = transactionViewModel.Amount;
+                spending.CategoryId = transactionViewModel.CategoryId;
+                spending.Date = transactionViewModel.Date;
+                spending.Description = transactionViewModel.Description;
+
+                _spendingRepo.UpdateSpending(spending);
+
+                transactionViewModel.Categories = categories;
+                return RedirectToAction("Index");
+            }
+        }
+        else
+        {
+            // Transaction not found
+            return NotFound();
+        }
     }
+
+    // If we got this far, something went wrong, redisplay form
+    transactionViewModel.Categories = categories;
+    return View(transactionViewModel);
+}
+
+
+private async Task PopulateCategories()
+{
+    var user = await _userManager.GetUserAsync(User);
+    if (user == null)
+    {
+        throw new Exception("User is not authenticated.");
+    }
+
+    var categories = await _categoryRepo.GetAllCategoriesByUserId(user.Id);
+
+    var categoryList = categories.Select(c => new
+    {
+        Id = c.Id,
+        Name = c.Name
+    }).ToList();
+    ViewBag.CategoryList = new SelectList(categoryList, "Id", "Name");
+}
+
 
 
 }

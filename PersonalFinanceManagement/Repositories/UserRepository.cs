@@ -29,7 +29,7 @@ public class UserRepository : IUserRepository
         _context.SaveChanges();
     }
 
-    public void DeleteUser(int id)
+    public void DeleteUser(Guid id)
     {
         var user = _context.Users.Find(id);
         if (user != null)

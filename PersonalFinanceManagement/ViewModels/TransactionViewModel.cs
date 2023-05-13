@@ -6,11 +6,10 @@ namespace PersonalFinanceManagement.ViewModels;
 
 public class TransactionViewModel
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
-    [Required]
-    [Range(1, int.MaxValue, ErrorMessage = "Please select a valid category.")]
-    public int CategoryId { get; set; }
+    [Range(typeof(Guid), "00000000-0000-0000-0000-000000000000", "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF", ErrorMessage = "Please select a valid category.")]
+    public Guid CategoryId { get; set; }
 
     [Required]
     [Range(0.01, double.MaxValue, ErrorMessage = "Please enter a valid amount.")]

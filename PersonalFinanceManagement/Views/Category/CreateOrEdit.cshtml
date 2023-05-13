@@ -1,7 +1,7 @@
 @model PersonalFinanceManagement.Models.Category
 
 @{
-    ViewData["PageTitle"] = Model.Id == 0 ? "Create a new category" : "Edit category";
+    ViewData["PageTitle"] = Model.Id == Guid.Empty ? "Create a new category" : "Edit category";
 }
 
 

@@ -21,28 +21,41 @@ public class CategoryController: Controller
         _categoryRepo = categoryRepo;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        var categories = _categoryRepo.GetAllCategories()
-            .Where(c => c.UserId == currentUserId)
-            .Select(c => new  CategoryViewModel{ Id = c.Id, Name = c.Name, Type = c.Type })
-            .ToList();
-        return View(categories);
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return Challenge();
+        }
+
+      
+
+        var categories = await _categoryRepo.GetAllCategoriesByUserId(user.Id);
+
+        var categoryViewModels = categories.Select(c => new CategoryViewModel { Id = c.Id, Name = c.Name, Type = c.Type }).ToList();
+
+        return View(categoryViewModels);
     }
 
+
     [HttpGet]
-    public IActionResult CreateOrEdit(int id = 0)
+    public async Task<IActionResult> CreateOrEdit(Guid id)
     {
         var category = new Category();
 
-        if (id != 0)
+        if (id != Guid.Empty)
         {
             category = _categoryRepo.GetCategoryById(id);
         }
         else
         {
-            category.UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Challenge();
+            }
+            category.UserId = user.Id;
         }
 
         return View(category);
@@ -56,17 +69,21 @@ public class CategoryController: Controller
     {
         if (ModelState.IsValid)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new Exception("User is not authenticated.");
+            }
 
             var category = new Category
             {
                 Id = model.Id,
                 Name = model.Name,
                 Type = model.Type,
-                UserId = userId,
+                UserId = user.Id,
             };
 
-            if (model.Id == 0)
+            if (model.Id == Guid.Empty)
             {
                 await _categoryRepo.AddCategory(category);
             }
@@ -90,7 +107,7 @@ public class CategoryController: Controller
     }
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
+    public async Task<IActionResult> DeleteConfirmed(Guid id)
     {
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
@@ -98,23 +115,18 @@ public class CategoryController: Controller
             return Challenge();
         }
 
+
         var category = _categoryRepo.GetCategoryById(id);
         if (category == null || category.UserId != user.Id)
         {
             return NotFound();
         }
 
+
         _categoryRepo.DeleteCategory(id);
         return RedirectToAction(nameof(Index));
     }
-    
-    
-    
-    // " 1 + 2 * 3 / 4 * 5 + 3 * 2" /
-    // [1,  + ,  2 * 3 / 4 * 5, + , 3 * 2  ]
-        
 
 
 
-    //...
 }

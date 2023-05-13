@@ -5,10 +5,10 @@ namespace PersonalFinanceManagement.Repositories;
 public interface ISpendingRepository
 {
     IEnumerable<Spending> GetAllSpendings();
-    Spending GetSpendingById(int id);
+    Spending GetSpendingById(Guid id);
     void AddSpending(Spending spending);
     void UpdateSpending(Spending spending);
-    void DeleteSpending(int id);
+    void DeleteSpending(Guid id);
     Task<double> GetTotalSpendingLast7DaysAsync();
 
 }

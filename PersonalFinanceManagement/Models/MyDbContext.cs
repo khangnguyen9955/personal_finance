@@ -1,10 +1,12 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace PersonalFinanceManagement.Models;
 
-public class MyDbContext : IdentityDbContext<User>
-{
+public class MyDbContext : IdentityDbContext<User, AppRole, Guid>
+{   
+
     public MyDbContext(DbContextOptions<MyDbContext> options)
         : base(options)
     {
@@ -19,7 +21,27 @@ public class MyDbContext : IdentityDbContext<User>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<User>(b =>
+        {
+            b.Property(u => u.Id).HasDefaultValueSql("newsequentialid()");
+        });
 
+        modelBuilder.Entity<AppRole>(b =>
+        {
+            b.Property(u => u.Id).HasDefaultValueSql("newsequentialid()");
+        });
+        modelBuilder.Entity<Income>(b =>
+        {
+            b.Property(u => u.Id).HasDefaultValueSql("newsequentialid()");
+        });
+        modelBuilder.Entity<Spending>(b =>
+        {
+            b.Property(u => u.Id).HasDefaultValueSql("newsequentialid()");
+        });       
+        modelBuilder.Entity<Category>(b =>
+        {
+            b.Property(u => u.Id).HasDefaultValueSql("newsequentialid()");
+        });
         modelBuilder.Entity<User>()
             .HasMany(u => u.Spendings)
             .WithOne(s => s.User)

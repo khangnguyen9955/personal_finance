@@ -1,11 +1,11 @@
 @model  PersonalFinanceManagement.ViewModels.TransactionViewModel
 @{
-    ViewData["PageTitle"] = Model.Id == 0 ? "Create a new transaction" : "Edit transaction";
+    ViewData["PageTitle"] = Model.Id == Guid.Empty ? "Create a new transaction" : "Edit transaction";
 }
 <div class="row">
 <div class="col-md-7">
     <div class="widget p-5" style="background-color:#212b36">
-        <form asp-action="Create">
+        <form asp-action="CreateOrEdit">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="TransactionId" value="@Model.Id" />
@@ -17,15 +17,30 @@
                     <label class="e-btn" for="radiomiddle">Income</label>
                 </div>
             </div>
-            <div class="mb-3">
-                <ejs-dropdownlist id="ddlCategory" ejs-for="CategoryId"
-                                  dataSource="@ViewBag.Categories" placeholder="Category"
-                                  floatLabelType="Always" allowFiltering="true" ignoreAccent="true"
-                                  filterType="Contains" popupHeight="220px">
-                    <e-dropdownlist-fields value="CategoryId" text="TitleWithIcon"></e-dropdownlist-fields>
-                </ejs-dropdownlist>
-                <span asp-validation-for="CategoryId" class="text-danger fs-6"></span>
-            </div>
+           <div class="mb-3">
+               @* <ejs-dropdownlist id="category" ejs-for="CategoryId" *@
+               @*                   dataSource="@ViewBag.Categories" placeholder="Category" *@
+               @*                   floatLabelType="Always" allowFiltering="true" ignoreAccent="true" *@
+               @*                   filterType="Contains" popupHeight="220px"> *@
+               @*     <e-dropdownlist-fields value="Id" text="TitleWithIcon"></e-dropdownlist-fields> *@
+               @* </ejs-dropdownlist> *@
+<select id="CategoryId" name="CategoryId" class="form-control">
+    <option value="">Category</option>
+    @foreach (var category in Model.Categories)
+    {
+        <option value="@category.Id"
+                selected="@Equals(Model.CategoryId, category.Id).ToString().ToLowerInvariant()">
+            @category.Name
+        </option>
+    }
+</select>
+
+
+
+
+               <span asp-validation-for="CategoryId" class="text-danger fs-6"></span>
+           </div>
+
             <div class="mb-3">
                 <ejs-numerictextbox id="amount" ejs-for="Amount"
                                     placeholder="Amount" floatLabelType="Always"
@@ -34,7 +49,7 @@
             </div>
 
             <div class="mb-3">
-                <ejs-textbox id="note" placeholder="Note" ejs-for="Description"
+                <ejs-textbox id="description" placeholder="Description" ejs-for="Description"
                              floatLabelType="Always" multiline="true"></ejs-textbox>
             </div>
             <div class="mb-3">
