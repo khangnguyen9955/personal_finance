@@ -12,10 +12,11 @@ public class SpendingRepository : ISpendingRepository
         _context = context;
     }
 
-    public IQueryable<Spending> GetAllSpendings()
+    public IQueryable<Spending> GetAllSpendings(Guid userId)
     {
         // return _context.Incomes.ToList();
         return _context.Spendings
+            .Where(i => i.UserId == userId)
             .Include(s => s.Category)
             .Include(s => s.User);
     }
@@ -46,14 +47,14 @@ public class SpendingRepository : ISpendingRepository
             _context.SaveChanges();
         }
     }
-    public async Task<double> GetTotalSpendingLast7DaysAsync()
+    public async Task<double> GetTotalSpendingLast7DaysAsync(Guid userId)
     {
         // Get DateTime object for 7 days ago
         var sevenDaysAgo = DateTime.Today.AddDays(-7);
 
         // Calculate total spending for last 7 days
         var totalSpending = await _context.Spendings
-            .Where(s => s.Date >= sevenDaysAgo)
+            .Where(i => i.UserId == userId && i.Date >= sevenDaysAgo)
             .SumAsync(s => s.Amount);
 
         return totalSpending;

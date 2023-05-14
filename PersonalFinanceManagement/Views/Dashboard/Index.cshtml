@@ -16,7 +16,7 @@
             </div>
             <div class="d-flex flex-column m-auto py-3">
                 <span class="lead">Total Income</span>
-                <h1 class="display-6 fw-bold">@ViewBag.TotalIncome</h1>
+                <h3 class=" fw-bold">@ViewBag.TotalIncome</h3>
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
             </div>
             <div class="d-flex flex-column m-auto py-3">
                 <span class="lead">Total Spending</span>
-                <h1 class="display-6 fw-bold">@ViewBag.TotalSpending</h1>
+                <h3 class=" fw-bold">@ViewBag.TotalSpending</h3>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
             </div>
             <div class="d-flex flex-column m-auto py-3">
                 <span class="lead">Balance</span>
-                <h1 class="display-6 fw-bold">@ViewBag.Balance</h1>
+                <h3 class=" fw-bold">@ViewBag.Balance</h3>
             </div>
         </div>
     </div>
@@ -105,7 +105,7 @@
 
 @*Recent Transactions and More*@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="widget">
             <div class="p-4">
                 <h5 class="fw-bold">Recent Transactions</h5>
@@ -115,18 +115,14 @@
                 dataSource="@ViewBag.RecentTransactions" gridLines="None">
                     <e-grid-columns>
                         <e-grid-column headerText="Category" field="CategoryName"></e-grid-column>
+                        <e-grid-column headerText="Type"  field="CategoryType"  textAlign="Center" ></e-grid-column>
+                        <e-grid-column headerText="Description" field="Description" ></e-grid-column>
                         <e-grid-column headerText="Date" field="Date" type="date" format="MMM-dd-yy"></e-grid-column>
-                        <e-grid-column headerText="Amount" field="Amount" textAlign="Right"></e-grid-column>
+                        <e-grid-column headerText="Amount" field="Amount" format =" ####.00 VND" textAlign="Right" ></e-grid-column>
                     </e-grid-columns>
                 </ejs-grid>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="widget h-100">
-            <div class="d-flex justify-content-center align-items-center h-100">
-                <span><i class="fa-solid fa-plus fa-2xl"></i> Widget</span>
-            </div>
-        </div>
-    </div>
+   
 </div>

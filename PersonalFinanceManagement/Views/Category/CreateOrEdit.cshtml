@@ -9,15 +9,17 @@
     <div class="col-md-7">
         <div class="widget p-5" style="background-color:#212b36">
             <form asp-action="CreateOrEdit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" name="Id" value="@Model.Id" />
+   <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="Id" value="@Model.Id"/>
                 <div class="mb-3">
                     <div class='e-btn-group custom-rbt-group'>
-                        <input type="radio" id="radioleft" name="Type" value="Spending" checked="@(Model.Type=="Spending")" />
+                        <input type="radio" id="radioleft" name="Type" value="Spending" required checked="@(Model.Type == "Spending")"/>
                         <label class="e-btn" for="radioleft">Spending</label>
-                        <input type="radio" id="radiomiddle" name="Type" value="Income" checked="@(Model.Type=="Income")" />
+                        <input type="radio" id="radiomiddle" name="Type" value="Income" required checked="@(Model.Type == "Income")"/>
                         <label class="e-btn" for="radiomiddle">Income</label>
+
                     </div>
+                                            <span asp-validation-for="Type" class="text-danger fs-6"></span>
                 </div>
                 <div class="mb-3">
                     <ejs-textbox id="name" placeholder="Name" ejs-for="Name" floatLabelType="Always"></ejs-textbox>

@@ -16,10 +16,11 @@ namespace PersonalFinanceManagement.Repositories
             _context = context;
         }
 
-        public IQueryable<Income> GetAllIncomes()
+        public IQueryable<Income> GetAllIncomes(Guid userId)
         {
             // return _context.Incomes.ToList();
             return _context.Incomes
+                .Where(i => i.UserId == userId)
                 .Include(s => s.Category)
                 .Include(s => s.User);
         }
@@ -51,17 +52,18 @@ namespace PersonalFinanceManagement.Repositories
             }
         }
 
-        public async Task<double> GetTotalIncomeLast7DaysAsync()
+        public async Task<double> GetTotalIncomeLast7DaysAsync(Guid userId)
         {
             // Get DateTime object for 7 days ago
             var sevenDaysAgo = DateTime.Today.AddDays(-7);
 
             // Calculate total income for last 7 days
             var totalIncome = await _context.Incomes
-                .Where(i => i.Date >= sevenDaysAgo)
+                .Where(i => i.UserId == userId && i.Date >= sevenDaysAgo)
                 .SumAsync(i => i.Amount);
 
             return totalIncome;
         }
+
     }
 }

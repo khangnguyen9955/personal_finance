@@ -1,3 +1,4 @@
+@using System.Globalization
 @model  PersonalFinanceManagement.ViewModels.TransactionViewModel
 @{
     ViewData["PageTitle"] = Model.Id == Guid.Empty ? "Create a new transaction" : "Edit transaction";
@@ -41,12 +42,13 @@
                <span asp-validation-for="CategoryId" class="text-danger fs-6"></span>
            </div>
 
-            <div class="mb-3">
-                <ejs-numerictextbox id="amount" ejs-for="Amount"
-                                    placeholder="Amount" floatLabelType="Always"
-                                    min=0 format="c0"></ejs-numerictextbox>
-                <span asp-validation-for="Amount" class="text-danger fs-6"></span>
-            </div>
+   <div class="mb-3">
+       <ejs-numerictextbox id="amount" ejs-for="Amount"
+                           placeholder="Amount" floatLabelType="Always"
+                           min=0 format="N0"  ></ejs-numerictextbox>
+       <span asp-validation-for="Amount" class="text-danger fs-6"></span>
+   </div>
+
 
             <div class="mb-3">
                 <ejs-textbox id="description" placeholder="Description" ejs-for="Description"
@@ -54,8 +56,9 @@
             </div>
             <div class="mb-3">
                 <ejs-datepicker id="date" ejs-for="Date"
-                                placeholder="Date" floatLabelType="Always"
-                                format="MMM-dd-yy"></ejs-datepicker>
+                                                placeholder="Date" floatLabelType="Always"
+                                                format="yyyy-MM-dd"></ejs-datepicker>
+
             </div>
 
             <ejs-button id="submit" type="submit" content="Submit" cssClass="e-success"></ejs-button>

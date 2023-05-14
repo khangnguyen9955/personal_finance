@@ -85,14 +85,14 @@ namespace PersonalFinanceManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Name, Email = model.Email };
+                var user = new User {  UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
         
                 if (result.Succeeded)
                 {
                     // If registration succeeded, sign the user in and redirect them to the home page.
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Dashboard");
                 }
         
                 foreach (var error in result.Errors)

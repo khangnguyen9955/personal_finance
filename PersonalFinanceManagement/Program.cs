@@ -12,6 +12,7 @@ Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBaFt+QHJq
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
@@ -26,6 +27,7 @@ builder.Services.AddDbContext<MyDbContext>(opts =>
 {
     opts.UseSqlServer(builder.Configuration["ConnectionStrings:PersonalFinanceConnection"]);
 });
+
 builder.Services.AddMvc(options =>
 {
     options.Filters.Add(new RequireLoginFilter()); // Add the filter to all controller actions

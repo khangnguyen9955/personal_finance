@@ -1,5 +1,6 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PersonalFinanceManagement.Models;
@@ -13,23 +14,31 @@ namespace PersonalFinanceManagement.Controllers;
         private readonly ICategoryRepository _categoryRepo;
         private readonly IIncomeRepository _incomeRepo;
         private readonly ISpendingRepository _spendingRepo;
+        private readonly UserManager<User> _userManager;
 
-        public DashboardController(ICategoryRepository categoryRepo, IIncomeRepository incomeRepo, ISpendingRepository spendingRepo)
+        public DashboardController(UserManager<User> userManager, ICategoryRepository categoryRepo, IIncomeRepository incomeRepo, ISpendingRepository spendingRepo)
         {
             _categoryRepo = categoryRepo;
             _incomeRepo = incomeRepo;
             _spendingRepo = spendingRepo;
+            _userManager = userManager;
         }
 
         public async Task<ActionResult> Index()
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Challenge();
+            }
+
             //Total Income
-            double last7DaysIncome = await _incomeRepo.GetTotalIncomeLast7DaysAsync();
+            double last7DaysIncome = await _incomeRepo.GetTotalIncomeLast7DaysAsync(user.Id);
             var cultureInfo = new CultureInfo("vi-VN");
             cultureInfo.NumberFormat.CurrencySymbol = "VND";
             ViewBag.TotalIncome = last7DaysIncome.ToString("C0", cultureInfo);
             //Total Expense
-            double last7DaysSpending = await _spendingRepo.GetTotalSpendingLast7DaysAsync();
+            double last7DaysSpending = await _spendingRepo.GetTotalSpendingLast7DaysAsync(user.Id);
             ViewBag.TotalSpending =last7DaysSpending.ToString("C0", cultureInfo);
             //Balance
             int Balance = Convert.ToInt32(last7DaysIncome - last7DaysSpending);
@@ -37,66 +46,22 @@ namespace PersonalFinanceManagement.Controllers;
             culture.NumberFormat.CurrencyNegativePattern = 1;
             ViewBag.Balance = String.Format(cultureInfo, "{0:C0}", Balance);
 
-            //Doughnut Chart - Expense By Category
-            // ViewBag.DoughnutChartData = SelectedTransactions
-            //     .Where(i => i.Category.Type == "Expense")
-            //     .GroupBy(j => j.Category.CategoryId)
-            //     .Select(k => new
-            //     {
-            //         categoryTitleWithIcon = k.First().Category.Icon + " " + k.First().Category.Title,
-            //         amount = k.Sum(j => j.Amount),
-            //         formattedAmount = k.Sum(j => j.Amount).ToString("C0"),
-            //     })
-            //     .OrderByDescending(l => l.amount)
-            //     .ToList();
-            //
-            // ViewBag.DoughnutChartData = _spendingRepo.GetAllSpendings()
-            //     .GroupBy(s => s.CategoryId)
-            //     .Select(g => new
-            //     {
-            //         CategoryName = g.First().Category.Name,
-            //         Amount = g.Sum(s => s.Amount),
-            //         FormattedAmount = g.Sum(s => s.Amount).ToString("C0", cultureInfo),
-            //     })
-            //     .OrderByDescending(g => g.Amount)
-            //     .ToList();
-            ViewBag.DoughnutChartData = _spendingRepo.GetAllSpendings()
+          
+            ViewBag.DoughnutChartData = _spendingRepo.GetAllSpendings(user.Id)
                 .ToList()
                 .GroupBy(s => s.CategoryId)
                 .Select(g => new
                 {
                     CategoryName = g.First().Category.Name,
                     Amount = g.Sum(s => s.Amount),
-                    FormattedAmount = g.Sum(s => s.Amount).ToString("C0", CultureInfo.InvariantCulture),
+                    FormattedAmount = g.Sum(s => s.Amount).ToString("C0", cultureInfo),
                 })
                 .OrderByDescending(g => g.Amount)
                 .ToList();
 
 
-            //Spline Chart - Income vs Expense
-
-            //Income
-            // List<SplineChartData> IncomeSummary = SelectedTransactions
-            //     .Where(i => i.Category.Type == "Income")
-            //     .GroupBy(j => j.Date)
-            //     .Select(k => new SplineChartData()
-            //     {
-            //         day = k.First().Date.ToString("dd-MMM"),
-            //         income = k.Sum(l => l.Amount)
-            //     })
-            //     .ToList();
-            
-            //Expense
-            // List<SplineChartData> ExpenseSummary = SelectedTransactions
-            //     .Where(i => i.Category.Type == "Expense")
-            //     .GroupBy(j => j.Date)
-            //     .Select(k => new SplineChartData()
-            //     {
-            //         day = k.First().Date.ToString("dd-MMM"),
-            //         expense = k.Sum(l => l.Amount)
-            //     })
-            //     .ToList();
-            List<SplineChartData> IncomeSummary = _incomeRepo.GetAllIncomes()
+           
+            List<SplineChartData> IncomeSummary = _incomeRepo.GetAllIncomes(user.Id)
                 .GroupBy(i => i.Date)
                 .Select(g => new SplineChartData()
                 {
@@ -105,7 +70,7 @@ namespace PersonalFinanceManagement.Controllers;
                 })
                 .ToList();
 
-            List<SplineChartData> SpendingSummary = _spendingRepo.GetAllSpendings()
+            List<SplineChartData> SpendingSummary = _spendingRepo.GetAllSpendings(user.Id)
                 .GroupBy(i => i.Date)
                 .Select(g => new SplineChartData()
                 {
@@ -133,13 +98,13 @@ namespace PersonalFinanceManagement.Controllers;
                                           spending = spending == null ? 0 : spending.spending,
                                       };
            
-            var recentTransactions = _spendingRepo.GetAllSpendings()
+            var recentTransactions = _spendingRepo.GetAllSpendings(user.Id)
                 .Include(s => s.Category)
                 .Include(s => s.User)
-                .Select(s => new { s.Id, s.Description, s.Amount, s.Date, s.CategoryId, CategoryName = s.Category.Name, s.UserId,  s.CreatedAt, s.UpdatedAt })
-                .Concat(_incomeRepo.GetAllIncomes().Include(i => i.Category)
+                .Select(s => new { s.Id, s.Description, s.Amount, s.Date, s.CategoryId, CategoryName = s.Category.Name, CategoryType= s.Category.Type , s.UserId,  s.CreatedAt, s.UpdatedAt })
+                .Concat(_incomeRepo.GetAllIncomes(user.Id).Include(i => i.Category)
                     .Include(i => i.User)
-                    .Select(i => new { i.Id, i.Description, i.Amount, i.Date, i.CategoryId, CategoryName = i.Category.Name, i.UserId,  i.CreatedAt, i.UpdatedAt }))
+                    .Select(i => new { i.Id, i.Description, i.Amount, i.Date, i.CategoryId, CategoryName = i.Category.Name,CategoryType = i.Category.Type, i.UserId,  i.CreatedAt, i.UpdatedAt }))
                 .OrderByDescending(t => t.Date)
                 .Take(5)
                 .ToList();

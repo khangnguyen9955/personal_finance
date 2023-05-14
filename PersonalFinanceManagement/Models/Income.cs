@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace PersonalFinanceManagement.Models;
 
@@ -33,8 +34,8 @@ public class Income:ITransaction
     public Guid Id { get; set; }
 
     [Required(ErrorMessage = "The description field is required.")]
+    [StringLength(50, ErrorMessage = "The description field must be a maximum of 50 characters.")]
     public string Description { get; set; }
-
     [Required(ErrorMessage = "The amount field is required.")]
     [Range(0, double.MaxValue, ErrorMessage = "The amount field must be a positive number.")]
     public double Amount { get; set; }
@@ -54,4 +55,6 @@ public class Income:ITransaction
     public DateTime? UpdatedAt { get; set; } // Nullable
 
    
+
+
 }

@@ -3,11 +3,11 @@ using PersonalFinanceManagement.Models;
 namespace PersonalFinanceManagement.Repositories;
 public interface IIncomeRepository
 {
-    IQueryable<Income> GetAllIncomes();
+    IQueryable<Income> GetAllIncomes(Guid userId);
     Income GetIncomeById(Guid id);
     void AddIncome(Income income);
     void UpdateIncome(Income income);
     void DeleteIncome(Guid id);
-    Task<double> GetTotalIncomeLast7DaysAsync();
+    Task<double> GetTotalIncomeLast7DaysAsync(Guid userId);
 
 }

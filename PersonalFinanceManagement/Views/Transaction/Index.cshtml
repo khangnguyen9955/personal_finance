@@ -1,15 +1,40 @@
+@using TaskExtensions = System.Data.Entity.SqlServer.Utilities.TaskExtensions
+@using System.Globalization
 @model  PersonalFinanceManagement.ViewModels.TransactionViewModel
 
-<h1>Transaction History</h1>
-@* *@
-@* <p>Total Income: @Model.TotalIncome.ToString("C")</p> *@
-@* <p>Total Spending: @Model.TotalSpending.ToString("C")</p> *@
-@* <p>Total Profit: @Model.TotalProfit.ToString("C")</p> *@
-<a class="btn btn-primary" href="@Url.Action("CreateOrEdit", "Transaction")">Create Transaction</a>
+@{
+    ViewData["PageTitle"] = "Transactions";
 
+}
+         <a class="btn btn-success mb-2" href="/Transaction/Create"> + Add Transaction</a>
 
-<hr>
+    <div>
+       <ejs-grid id="transactions" dataSource="@Model.Transactions" gridLines="None"
+                 allowSorting="true" allowPaging="true">
+            <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column headerText="Category" field="CategoryName"></e-grid-column>
+<e-grid-column headerText="Type" field="TransactionType"></e-grid-column>
+               <e-grid-column headerText="Date" field="Date" width="110px"
+                    type="date" format="MMM-dd-yy" textAlign="Left"></e-grid-column>
+                <e-grid-column headerText="Amount (VND)" field="Amount" format ="N0" headerTextAlign="Right" textAlign="Right" ></e-grid-column>
+                <e-grid-column headerText="Actions" textAlign="Right" headerTextAlign="Right" template="#actionColumnTemplate"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
 
-<h2>Transaction List</h2>
-
+<script id="actionColumnTemplate" type="text/x-template">
+    <div class="d-flex flex-row justify-content-end">
+        <a class="btn btn-sm no-a-decoration" href="/Transaction/Edit/${Id}">
+            <i class="fa-solid fa-pen fa-lg"></i>
+        </a>
+        <form action="/Transaction/Delete/${Id}" method="post">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-sm btn-link no-a-decoration"
+            onclick="return confirm(&quot;Are sure to delete this record?&quot;)">
+                <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
+            </button>
+        </form>
+    </div>
+</script>
 

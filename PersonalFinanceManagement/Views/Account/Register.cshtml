@@ -28,6 +28,7 @@
                <div class="card bg-white text-black">
                   <div class="card-body px-4 py-5 px-md-5">
                       <form asp-action="Register" asp-controller="Account" method="post">
+                          
                           <div class="form-group">
                               <label asp-for="Name"></label>
                               <input asp-for="Name" name="Name" class="form-control"/>
@@ -48,9 +49,9 @@
                               <input asp-for="ConfirmPassword" name="ConfirmPassword" class="form-control"/>
                               <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                           </div>
-                                                    <div class="form-group">
-                                                        <button type="submit" class="btn " style="background-color:#38bdf8">Register</button>
-                                                    </div>
+                          <div class="form-group">
+                              <button type="submit" class="btn " style="background-color:#38bdf8">Register</button>
+                          </div>
                           <div class="text-center">
                               <p>Do you have an account?</p>
                               <a asp-controller="Account" asp-action="Login" style="background-color:#38bdf8" class="btn ">Signup</a>

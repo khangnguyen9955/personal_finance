@@ -1,5 +1,3 @@
-using System.Data.Entity;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using PersonalFinanceManagement.Models;
 using PersonalFinanceManagement.Repositories;
 using PersonalFinanceManagement.ViewModels;
-using System.Collections.Generic;
 
-using Syncfusion.EJ2.Linq;
 
 namespace PersonalFinanceManagement.Controllers;
 [Authorize]
@@ -29,19 +25,38 @@ public class TransactionController :  Controller
         _userManager = userManager;
 
     }
-
-    public IActionResult Index()
+    
+    [HttpGet]
+    public async Task<IActionResult> Index()
     {
-        // var incomes = _incomeRepo.GetAllIncomes().ToList(); // convert to list
-        // var spendings = _spendingRepo.GetAllSpendings().ToList();
-        // var viewModel = new TransactionViewModel 
-        // {
-        //     Incomes = incomes,
-        //     Spendings = spendings,
-        //     Categories = _categoryRepo.GetAllCategories().ToList()
-        // };
-        return View();
+        var user = await _userManager.GetUserAsync(User);
+        var spendings = await _spendingRepo.GetAllSpendings(user.Id).ToListAsync();
+        var incomes = await _incomeRepo.GetAllIncomes(user.Id).ToListAsync();
+
+
+        var transactions = new List<ITransaction>();
+        transactions.AddRange(spendings);
+        transactions.AddRange(incomes);
+        transactions = transactions.OrderByDescending(t => t.Date).ToList();
+        var transactionViewModels = transactions.Select(t => new TransactionViewModel
+        {
+            Id = t.Id,
+            CategoryId = t.CategoryId,
+            Amount = t.Amount,
+            Description = t.Description,
+            Date = t.Date,
+            TransactionType = t.Category.Type,
+            CategoryName = t.Category.Name // Assuming the category has a 'Name' property
+        }).ToList();
+
+        var transactionViewModel = new TransactionViewModel
+        {
+            Transactions = transactionViewModels
+        };
+
+        return View(transactionViewModel);
     }
+
 
     [HttpGet]
     public async Task<IActionResult> CreateOrEdit(Guid id) 
@@ -55,7 +70,8 @@ public class TransactionController :  Controller
         var categories = await _categoryRepo.GetAllCategoriesByUserId(user.Id);
         var viewModel = new TransactionViewModel
         {
-            Categories = categories
+            Categories = categories,
+            Date = DateTime.Today
         };
 
         if (id == Guid.Empty) // Create new transaction

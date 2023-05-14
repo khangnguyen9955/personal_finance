@@ -21,12 +21,16 @@ public class TransactionViewModel
 
     [Required]
     [DataType(DataType.Date)]
-    [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}")]
     public DateTime Date { get; set; }
 
     [TransactionType(ErrorMessage = "Please select a valid transaction type.")]
     public string TransactionType { get; set; } // "income" or "spending"
     public List<Category>? Categories { get; set; }
+    public string? CategoryName { get; set; }
+    public List<Spending>? Spendings { get; set; }
+    public List<Income>? Incomes { get; set; }
+    public List<TransactionViewModel>? Transactions { get; set; } // Child transactions (sub-categories or individual transactions)
+
 
 }
 

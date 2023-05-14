@@ -5,7 +5,8 @@ namespace PersonalFinanceManagement.Models;
 
 public class User : IdentityUser<Guid>
 {
-
+    // TODO : add name
+    // public string Name { get; set; }
     [Range(0, double.MaxValue, ErrorMessage = "The balance field must be a positive number.")]
     public double Balance { get; set; }
 
