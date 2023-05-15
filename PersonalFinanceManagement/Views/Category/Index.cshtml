@@ -4,10 +4,9 @@
     ViewData["PageTitle"] = "Categories";
 }
 
-
+         <a class="btn btn-success mb-2" href="/Category/Create"> + Add Category </a>
 <div class="row">
     <div class="col-md-7">
-         <a class="btn btn-success mb-2" href="/Category/Create"> + Add Category </a>
         <ejs-grid id="categories" dataSource="@Model" gridLines="None"
                   allowSorting="true" allowPaging="true">
             <e-grid-pagesettings pageSize="5"></e-grid-pagesettings>

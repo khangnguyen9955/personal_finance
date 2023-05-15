@@ -123,7 +123,12 @@ app.UseEndpoints(endpoints =>
 
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "",
+        pattern: "/",
+        defaults: new { controller = "Home", action = "Index" }
+    );
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "Dashboard",
         defaults: new { controller = "Dashboard", action = "Index" }
     );
     endpoints.MapControllerRoute(
@@ -143,6 +148,18 @@ app.UseEndpoints(endpoints =>
         name: "account",
         pattern: "Account/Profile",
         defaults: new { controller = "Account", action = "Profile" });
+    endpoints.MapControllerRoute(
+        name: "category-delete",
+        pattern: "Category/Delete/{id?}",
+        defaults: new { controller = "Category", action = "Delete" });
+    endpoints.MapControllerRoute(
+        name: "transaction-delete",
+        pattern: "Transaction/Delete/{id?}",
+        defaults: new { controller = "Transaction", action = "Delete" });
+
+
+
+
 });
 
 app.UseCors("CorsPolicy");

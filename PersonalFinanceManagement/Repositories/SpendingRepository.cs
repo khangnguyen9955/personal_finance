@@ -20,6 +20,13 @@ public class SpendingRepository : ISpendingRepository
             .Include(s => s.Category)
             .Include(s => s.User);
     }
+    public async Task<double> GetTotalSpendings(Guid userId)
+    {
+        return await _context.Spendings
+            .Where(i => i.UserId == userId)
+            .SumAsync(i => i.Amount);
+    }
+
 
     public Spending GetSpendingById(Guid id)
     {

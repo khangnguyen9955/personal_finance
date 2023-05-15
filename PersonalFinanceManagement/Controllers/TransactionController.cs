@@ -76,7 +76,7 @@ public class TransactionController :  Controller
 
         if (id == Guid.Empty) // Create new transaction
         {
-            viewModel.TransactionType = "income"; // Default to "income" for new transaction
+            return View(viewModel);
         }
         else {
             var spending = _spendingRepo.GetSpendingById(id);
@@ -87,7 +87,6 @@ public class TransactionController :  Controller
                 viewModel.Amount = spending.Amount; 
                 viewModel.Description = spending.Description;
                 viewModel.Date = spending.Date;
-                viewModel.TransactionType = "spending";
             }
             else
             {
@@ -99,7 +98,6 @@ public class TransactionController :  Controller
                     viewModel.Amount = income.Amount;
                     viewModel.Description = income.Description;
                     viewModel.Date = income.Date;
-                    viewModel.TransactionType = "income";
                 }
                 else
                 {
@@ -123,14 +121,17 @@ public async Task<IActionResult> CreateOrEdit(TransactionViewModel transactionVi
     }
 
     var categories = await _categoryRepo.GetAllCategoriesByUserId(user.Id);
-    
+    var category = _categoryRepo.GetCategoryById(transactionViewModel.CategoryId);
+
     if (id == Guid.Empty )// Create new transaction
     {
+        transactionViewModel.TransactionType = "";
         transactionViewModel.Categories = categories;
         if (ModelState.IsValid)
         {
-            if (transactionViewModel.TransactionType == "income")
+            if (category.Type == "Income")
             {
+               
                 // create new Income object
                 var income = new Income
                 {
@@ -144,7 +145,7 @@ public async Task<IActionResult> CreateOrEdit(TransactionViewModel transactionVi
                 // add income to repository
                 _incomeRepo.AddIncome(income);
             }
-            else if (transactionViewModel.TransactionType == "spending")
+            else if (category.Type == "Spending")
             {
                 // create new Spending object
                 var spending = new Spending
@@ -218,24 +219,29 @@ public async Task<IActionResult> CreateOrEdit(TransactionViewModel transactionVi
 }
 
 
-private async Task PopulateCategories()
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Delete(Guid id)
 {
-    var user = await _userManager.GetUserAsync(User);
-    if (user == null)
+    // Determine whether the transaction being deleted is an income or a spending
+    var income = _incomeRepo.GetIncomeById(id);
+    var spending = _spendingRepo.GetSpendingById(id);
+
+    if (income != null)
     {
-        throw new Exception("User is not authenticated.");
+        _incomeRepo.DeleteIncome(income.Id);
+    }
+    else if (spending != null)
+    {
+        _spendingRepo.DeleteSpending(spending.Id);
+    }
+    else
+    {
+        return NotFound();
     }
 
-    var categories = await _categoryRepo.GetAllCategoriesByUserId(user.Id);
-
-    var categoryList = categories.Select(c => new
-    {
-        Id = c.Id,
-        Name = c.Name
-    }).ToList();
-    ViewBag.CategoryList = new SelectList(categoryList, "Id", "Name");
+    return RedirectToAction("Index");
 }
-
 
 
 }

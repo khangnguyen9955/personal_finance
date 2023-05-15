@@ -24,6 +24,12 @@ namespace PersonalFinanceManagement.Repositories
                 .Include(s => s.Category)
                 .Include(s => s.User);
         }
+        public async Task<double> GetTotalIncomes(Guid userId)
+        {
+            return await _context.Incomes
+                .Where(i => i.UserId == userId)
+                .SumAsync(i => i.Amount);
+        }
 
         public Income GetIncomeById(Guid id)
         {

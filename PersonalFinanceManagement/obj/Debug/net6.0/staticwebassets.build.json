@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "du2hOjNWduDvo0gS7LmAWkU9/7aFWEopzn1iLxu+H9g=",
+  "Hash": "1OlIa6765kIjOxDH7opjnHksfExFfuc7ShPtNuQaKfo=",
   "Source": "PersonalFinanceManagement",
   "BasePath": "_content/PersonalFinanceManagement",
   "Mode": "Default",
@@ -1069,6 +1069,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/lib/jquery/LICENSE.txt"
+    },
+    {
+      "Identity": "/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/wwwroot/logo.png",
+      "SourceId": "PersonalFinanceManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/wwwroot/",
+      "BasePath": "_content/PersonalFinanceManagement",
+      "RelativePath": "logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/logo.png"
+    },
+    {
+      "Identity": "/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/wwwroot/profile.png",
+      "SourceId": "PersonalFinanceManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/khangnguyen9955/Documents/School/1670 - devapp/PersonalFinanceManagement/PersonalFinanceManagement/wwwroot/",
+      "BasePath": "_content/PersonalFinanceManagement",
+      "RelativePath": "profile.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/profile.png"
     }
   ]
 }

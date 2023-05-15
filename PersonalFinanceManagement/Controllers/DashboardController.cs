@@ -31,21 +31,29 @@ namespace PersonalFinanceManagement.Controllers;
             {
                 return Challenge();
             }
-
-            //Total Income
+            
+            // GET Total in 7days
             double last7DaysIncome = await _incomeRepo.GetTotalIncomeLast7DaysAsync(user.Id);
             var cultureInfo = new CultureInfo("vi-VN");
             cultureInfo.NumberFormat.CurrencySymbol = "VND";
-            ViewBag.TotalIncome = last7DaysIncome.ToString("C0", cultureInfo);
-            //Total Expense
+            ViewBag.TotalIncomeIn7Days = last7DaysIncome.ToString("C0", cultureInfo);
             double last7DaysSpending = await _spendingRepo.GetTotalSpendingLast7DaysAsync(user.Id);
-            ViewBag.TotalSpending =last7DaysSpending.ToString("C0", cultureInfo);
-            //Balance
-            int Balance = Convert.ToInt32(last7DaysIncome - last7DaysSpending);
+            ViewBag.TotalSpendingIn7Days=last7DaysSpending.ToString("C0", cultureInfo);
+            int diff7days= Convert.ToInt32(last7DaysIncome - last7DaysSpending);
             CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
             culture.NumberFormat.CurrencyNegativePattern = 1;
-            ViewBag.Balance = String.Format(cultureInfo, "{0:C0}", Balance);
+            ViewBag.DiffIn7Days= String.Format(cultureInfo, "{0:C0}", diff7days);
+            
+            // Total
+            double totalIncome = await _incomeRepo.GetTotalIncomes(user.Id);
+            ViewBag.TotalIncome = totalIncome.ToString("C0", cultureInfo);
+            double totalSpending = await _spendingRepo.GetTotalSpendings(user.Id);
+            ViewBag.TotalSpending = totalSpending.ToString("C0", cultureInfo);
+            int balance = Convert.ToInt32(totalIncome - totalSpending);
+            ViewBag.Balance = String.Format(cultureInfo, "{0:C0}", balance);
 
+ 
+            
           
             ViewBag.DoughnutChartData = _spendingRepo.GetAllSpendings(user.Id)
                 .ToList()

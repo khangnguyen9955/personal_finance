@@ -6,7 +6,6 @@
     ViewData["PageTitle"] = "Dashboard";
 }
 
-@*Summary Widgets*@
 <div class="row mb-4">
 
     <div class="col-md-4">
@@ -14,9 +13,9 @@
             <div class="d-flex flex-column justify-content-center p-5">
                 <i class="fa-solid fa-dollar-sign fa-2xl"></i>
             </div>
-            <div class="d-flex flex-column m-auto py-3">
+            <div class="d-flex flex-column ms-3 py-3">
                 <span class="lead">Total Income</span>
-                <h3 class=" fw-bold">@ViewBag.TotalIncome</h3>
+                <h5 class=" fw-bold">@ViewBag.TotalIncome</h5>
             </div>
         </div>
     </div>
@@ -26,9 +25,9 @@
             <div class="d-flex flex-column justify-content-center p-5">
                 <i class="fa-solid fa-dollar-sign fa-2xl"></i>
             </div>
-            <div class="d-flex flex-column m-auto py-3">
+            <div class="d-flex flex-column ms-3 py-3">
                 <span class="lead">Total Spending</span>
-                <h3 class=" fw-bold">@ViewBag.TotalSpending</h3>
+                <h5 class=" fw-bold">@ViewBag.TotalSpending</h5>
             </div>
         </div>
     </div>
@@ -38,14 +37,51 @@
             <div class="d-flex flex-column justify-content-center p-5">
                 <i class="fa-solid fa-dollar-sign fa-2xl"></i>
             </div>
-            <div class="d-flex flex-column m-auto py-3">
+            <div class="d-flex flex-column ms-3 py-3">
                 <span class="lead">Balance</span>
-                <h3 class=" fw-bold">@ViewBag.Balance</h3>
+                <h5 class=" fw-bold">@ViewBag.Balance</h5>
             </div>
         </div>
     </div>
 </div>
+<div class="row mb-4">
 
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary income">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column ms-3 py-3">
+                <span class="lead">Income in 7 days</span>
+                <h5 class=" fw-bold">@ViewBag.TotalIncomeIn7Days</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary expense">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column ms-3 py-3">
+                <span class="lead">Spending in 7 days</span>
+                <h5 class=" fw-bold">@ViewBag.TotalSpendingIn7Days</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary balance">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column ms-3 py-3">
+                <span class="lead">Difference in 7 days</span>
+                <h5 class=" fw-bold">@ViewBag.DiffIn7Days</h5>
+            </div>
+        </div>
+    </div>
+</div>
 @*Doughnut and Spline Chart*@
 <div class="row mb-4">
     <div class="col-md-4">
@@ -72,7 +108,7 @@
     <div class="col-md-8">
         <div class="widget chart">
             <div class="p-4">
-                <h5 class="fw-bold">Income vs Spending</h5>
+                <h5 class="fw-bold">Income vs Spending In 7 Days</h5>
             </div>
             <ejs-chart id="spline-chart" background="#1a222b"
                        palettes=@(new string[]{"#54ffa9","#ffe91a"})>

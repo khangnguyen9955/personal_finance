@@ -50,8 +50,9 @@
 
                <div class="card bg-white text-black">
                   <div class="card-body px-4 py-5 px-md-5">
+                                            <p class="mb-4 justify-content-center fs-5 fw-bold d-flex ">Login to the website</p>
                      <form asp-action="Login" asp-controller="Account" method="post">
-                        <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+                        <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]"/>
 
                         <div asp-validation-summary="ModelOnly" class="alert "></div>
                         <!-- Email input -->
@@ -73,16 +74,17 @@
                         </div>
 
 
-                        <!-- Submit button -->
-                        <button type="submit" class="btn  btn-block mb-4" style="background-color:#38bdf8">
+                     <!-- Submit button -->
+ <div class="form-group  mt-2 text-center">
+                        <button type="submit" class="btn  btn-block" style="background-color:#38bdf8">
                            Sign up
                         </button>
-
+                           </div>
                         <!-- Register buttons -->
-                        <div class="text-center">
-                           <p>Or are you new?</p>
-                           <a asp-controller="Account" asp-action="Register" style="background-color:#38bdf8" class="btn ">Register</a>
-                        </div>
+                         <div class="d-flex mt-2  justify-content-center ">
+                               <a href="/Account/Register">Don't have an account?</a>
+                                                      @* <a asp-controller="Account" asp-action="Login" style="background-color:#38bdf8" class="btn ">Signup</a> *@
+                                </div>
                      </form>
                   </div>
                </div>

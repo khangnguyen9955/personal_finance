@@ -22,9 +22,10 @@ public class TransactionViewModel
     [Required]
     [DataType(DataType.Date)]
     public DateTime Date { get; set; }
+    
 
-    [TransactionType(ErrorMessage = "Please select a valid transaction type.")]
-    public string TransactionType { get; set; } // "income" or "spending"
+
+    public string? TransactionType { get; set; } // "income" or "spending"
     public List<Category>? Categories { get; set; }
     public string? CategoryName { get; set; }
     public List<Spending>? Spendings { get; set; }

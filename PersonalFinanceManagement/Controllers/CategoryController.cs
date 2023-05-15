@@ -105,9 +105,9 @@ public class CategoryController: Controller
 
         return View();
     }
-    [HttpPost, ActionName("Delete")]
+    [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(Guid id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
