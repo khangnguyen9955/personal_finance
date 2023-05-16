@@ -46,7 +46,7 @@ public class TransactionController :  Controller
             Description = t.Description,
             Date = t.Date,
             TransactionType = t.Category.Type,
-            CategoryName = t.Category.Name // Assuming the category has a 'Name' property
+            CategoryName = t.Category.Name
         }).ToList();
 
         var transactionViewModel = new TransactionViewModel

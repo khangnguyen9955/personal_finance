@@ -91,7 +91,6 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapRazorPages();
-
     endpoints.MapControllerRoute(
         name: "transaction-create",
         pattern: "Transaction/Create",
@@ -156,10 +155,6 @@ app.UseEndpoints(endpoints =>
         name: "transaction-delete",
         pattern: "Transaction/Delete/{id?}",
         defaults: new { controller = "Transaction", action = "Delete" });
-
-
-
-
 });
 
 app.UseCors("CorsPolicy");
